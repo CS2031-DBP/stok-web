@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Profile } from '../components/Profile';
 import { fetchUpdateOwner, fetchUpdateEmployee } from '../services/api';
-import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchDeleteOwner, fetchDeleteEmployee } from '../services/api';
+import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchDeleteOwner, fetchDeleteEmployee, fetchDeleteOwnEmployee } from '../services/api';
 
 export const EditProfile = () => {
   const navigate = useNavigate();
@@ -29,7 +29,13 @@ export const EditProfile = () => {
         } else if (role === 'ROLE_EMPLOYEE') {
           profileData = await fetchGetEmployee();
           setEmployeeId(profileData.id);
-          console.log(profileData)
+
+          if(profileData.owner == null) {
+            console.log("No hay un owner asignado")
+            setAssignedOwnerIdToEmployee(null);
+          } else {
+            setAssignedOwnerIdToEmployee(profileData.owner.id)
+          }
         }
 
         setFormData({
@@ -50,8 +56,11 @@ export const EditProfile = () => {
       if (userRole === 'ROLE_OWNER') {
         await fetchDeleteOwner(ownerId);
       } else if (userRole === 'ROLE_EMPLOYEE') {
-        //setAssignedOwnerIdToEmployee(profileData.)
-        await fetchDeleteEmployee(employeeId);
+        if(assignedOwnerIdToEmployee == null) {
+          await fetchDeleteOwnEmployee(employeeId);
+        } else {
+          await fetchDeleteEmployee(assignedOwnerIdToEmployee, employeeId);
+        }
       }
       navigate('/login');
     } catch (error) {

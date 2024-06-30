@@ -16,7 +16,6 @@ export const Profile = () => {
           } else if (role === 'ROLE_EMPLOYEE') {
             profileData = await fetchGetEmployee();
           }
-          console.log(profileData)
           setProfileInfo(profileData);
         } catch (error) {
           console.error('Error fetching profile information', error);
@@ -30,9 +29,10 @@ export const Profile = () => {
       <h1 className='text-4xl font-bold m-5'>{profileInfo && profileInfo.role === 'OWNER' ? 'Owner' : profileInfo && profileInfo.role === 'EMPLOYEE' ? 'Employee' : 'Perfil'}</h1>
       <section className='grid grid-cols-2'>
         <ul className='list-disc'>
-          <li id="profileNames" className='text-2xl'>{profileInfo && profileInfo.firstName + " " + profileInfo.lastName}</li>
-          <li id='profileEmail' className='text-2xl'>{profileInfo && profileInfo.email}</li>
-          <li id='profilePhone' className='text-2xl'>{profileInfo && profileInfo.phoneNumber}</li>
+        <li id="profileId" className='text-2xl'>ID: {profileInfo && profileInfo.id}</li>
+          <li id="profileNames" className='text-2xl'>Name: {profileInfo && profileInfo.firstName + " " + profileInfo.lastName}</li>
+          <li id='profileEmail' className='text-2xl'>Email: {profileInfo && profileInfo.email}</li>
+          <li id='profilePhone' className='text-2xl'>Phone Number: {profileInfo && profileInfo.phoneNumber}</li>
         </ul>
       </section>
     </article>

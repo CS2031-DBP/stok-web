@@ -101,3 +101,16 @@ export const fetchDeleteEmployee = async (ownerId, employeeId) => {
         throw error;
     }
 };
+
+export const fetchDeleteOwnEmployee = async (employeeId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BACKEND_URL}/employees/delete/${employeeId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en updateDriverInfo:', error);
+        throw error;
+    }
+};
