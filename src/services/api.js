@@ -75,3 +75,29 @@ export const fetchUpdateEmployee = async (id, updateEmployeeRequest) => {
         throw error;
     }
 };
+
+export const fetchDeleteOwner = async (id) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BACKEND_URL}/owner/delete/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en updateDriverInfo:', error);
+        throw error;
+    }
+};
+
+export const fetchDeleteEmployee = async (ownerId, employeeId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BACKEND_URL}/employees/delete/${ownerId}/${employeeId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en updateDriverInfo:', error);
+        throw error;
+    }
+};

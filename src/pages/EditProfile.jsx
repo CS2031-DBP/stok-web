@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Profile } from '../components/Profile';
 import { fetchUpdateOwner, fetchUpdateEmployee } from '../services/api';
-import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
+import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchDeleteOwner, fetchDeleteEmployee } from '../services/api';
 
 export const EditProfile = () => {
   const navigate = useNavigate();
@@ -14,6 +14,7 @@ export const EditProfile = () => {
   const [userRole, setUserRole] = useState('');
   const [ownerId, setOwnerId] = useState('');
   const [employeeId, setEmployeeId] = useState('');
+  const [assignedOwnerIdToEmployee, setAssignedOwnerIdToEmployee] = useState(''); 
 
   useEffect(() => {
     const fetchProfileInfo = async () => {
@@ -28,6 +29,7 @@ export const EditProfile = () => {
         } else if (role === 'ROLE_EMPLOYEE') {
           profileData = await fetchGetEmployee();
           setEmployeeId(profileData.id);
+          console.log(profileData)
         }
 
         setFormData({
@@ -42,6 +44,20 @@ export const EditProfile = () => {
 
     fetchProfileInfo();
   }, []);
+
+  const handleDeleteAccount = async () => {
+    try {
+      if (userRole === 'ROLE_OWNER') {
+        await fetchDeleteOwner(ownerId);
+      } else if (userRole === 'ROLE_EMPLOYEE') {
+        //setAssignedOwnerIdToEmployee(profileData.)
+        await fetchDeleteEmployee(employeeId);
+      }
+      navigate('/login');
+    } catch (error) {
+      console.error('Error al eliminar la cuenta:', error);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -126,7 +142,9 @@ export const EditProfile = () => {
       <div className="mx-16 mt-10 max-h-96 p-10 bg-gray-200 shadow-lg rounded-lg">
         <Profile/>
         <div className='flex justify-center'>
-          <button id='deleteUser' className='bg-primary text-white font-bold py-2 px-20 mt-10 rounded-full cursor-pointer'>
+          <button id='deleteUser'
+          className='bg-primary text-white font-bold py-2 px-20 mt-10 rounded-full cursor-pointer'
+          onClick={handleDeleteAccount}>
             Eliminar cuenta
           </button>
         </div>
