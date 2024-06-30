@@ -32,7 +32,7 @@ export const fetchGetOwner = async () => {
       });
       return response.data;
     } catch (error) {
-      console.error('Error en getPassenger:', error);
+      console.error('Error en fetchGetOwner:', error);
       throw error;
     }
 };
@@ -45,7 +45,7 @@ export const fetchGetEmployee = async () => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error en getPassenger:', error);
+        console.error('Error en fetchGetEmployee:', error);
         throw error;
     }
 };
@@ -58,7 +58,7 @@ export const fetchUpdateOwner = async (id, ownerInfo) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error en updateDriverInfo:', error);
+        console.error('Error en fetchUpdateOwner:', error);
         throw error;
     }
 };
@@ -71,7 +71,7 @@ export const fetchUpdateEmployee = async (id, updateEmployeeRequest) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error en updatePassenger:', error);
+        console.error('Error en fetchUpdateEmployee:', error);
         throw error;
     }
 };
@@ -84,7 +84,7 @@ export const fetchDeleteOwner = async (id) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error en updateDriverInfo:', error);
+        console.error('Error en fetchDeleteOwner:', error);
         throw error;
     }
 };
@@ -97,7 +97,7 @@ export const fetchDeleteEmployee = async (ownerId, employeeId) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error en updateDriverInfo:', error);
+        console.error('Error en fetchDeleteEmployee:', error);
         throw error;
     }
 };
@@ -110,7 +110,22 @@ export const fetchDeleteOwnEmployee = async (employeeId) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error en updateDriverInfo:', error);
+        console.error('Error en fetchDeleteOwnEmployee:', error);
+        throw error;
+    }
+};
+
+export const fetchAssignEmployee = async (ownerId, employeeId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/employees/assign/${ownerId}/${employeeId}`, 
+            {},
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchAssignEmployee:', error);
         throw error;
     }
 };
