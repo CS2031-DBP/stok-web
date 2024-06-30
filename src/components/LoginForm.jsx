@@ -16,7 +16,7 @@ export const LoginForm = () => {
       const response = await fetchLogin(username, password);
       localStorage.setItem('token', response.token);
       console.log(response.token);
-      navigate('/profile');
+      navigate('/dashboard');
     } catch (error) {
       console.log(error);
       setError('Error durante el inicio de sesión');

@@ -35,17 +35,43 @@ export const fetchGetOwner = async () => {
       console.error('Error en getPassenger:', error);
       throw error;
     }
-  };
+};
 
-  export const fetchGetEmployee = async () => {
+export const fetchGetEmployee = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(`${BACKEND_URL}/employees/me`, {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${BACKEND_URL}/employees/me`, {
         headers: { Authorization: `Bearer ${token}` }
-      });
-      return response.data;
+        });
+        return response.data;
     } catch (error) {
-      console.error('Error en getPassenger:', error);
-      throw error;
+        console.error('Error en getPassenger:', error);
+        throw error;
     }
-  };
+};
+
+export const fetchUpdateOwner = async (id, ownerInfo) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/owner/update/${id}`, ownerInfo, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en updateDriverInfo:', error);
+        throw error;
+    }
+};
+
+export const fetchUpdateEmployee = async (id, updateEmployeeRequest) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/employees/update/${id}`, updateEmployeeRequest, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en updatePassenger:', error);
+        throw error;
+    }
+};

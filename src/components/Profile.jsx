@@ -2,7 +2,7 @@ import React from 'react'
 import { fetchGetOwner, fetchGetEmployee, getRoleBasedOnToken } from '../services/api';
 import { useState, useEffect } from 'react';
 
-const Profile = () => {
+export const Profile = () => {
     const [profileInfo, setProfileInfo] = useState({});
 
     useEffect(() => {
@@ -38,5 +38,3 @@ const Profile = () => {
     </article>
   )
 }
-
-export default Profile
