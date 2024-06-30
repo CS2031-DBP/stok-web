@@ -62,7 +62,7 @@ export const LoginForm = () => {
           </div>
         )}
         <div className="flex justify-center">
-          <button id="loginSubmit" className=' bg-sky-400 text-white font-bold mx-6 py-2 px-4 my-1 rounded-full cursor-pointer' type="submit">
+          <button id="loginSubmit" className='bg-sky-400 text-white font-bold mx-6 py-2 px-4 my-1 rounded-full cursor-pointer' type="submit">
             Iniciar Sesión
           </button>
         </div>
