@@ -9,6 +9,8 @@ export const getRoleBasedOnToken = () => {
     return decodedToken.role;
   }
 
+// Auth
+
 export const fetchLogin = async(username, password) => {
 
     const response = await axios.post(`${BACKEND_URL}/auth/login`, {username, password});
@@ -23,6 +25,8 @@ export const fetchRegister = async (firstName, lastName, email, password, isOwne
 
     return response.data;
 };
+
+// Owner y Employee
 
 export const fetchGetOwner = async () => {
     try {
@@ -126,6 +130,49 @@ export const fetchAssignEmployee = async (ownerId, employeeId) => {
         return response.data;
     } catch (error) {
         console.error('Error en fetchAssignEmployee:', error);
+        throw error;
+    }
+};
+
+// Product e Inventario
+
+export const fetchAddProduct = async (name, description, price, category) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/product/add`, {name, description, price, category},
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchAddProduct:', error);
+        throw error;
+    }
+};
+
+export const fetchGetProduct = async (id) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/product/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchGetProduct:', error);
+      throw error;
+    }
+};
+
+export const fetchCreateInventory = async (ownerId, productId, quantity) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/inventory/create`, {ownerId, productId, quantity},
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchAddProduct:', error);
         throw error;
     }
 };

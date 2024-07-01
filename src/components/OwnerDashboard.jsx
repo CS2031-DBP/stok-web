@@ -4,24 +4,17 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 export const OwnerDashboard = () => {
-    const [profileInfo, setProfileInfo] = useState({});
     const [employeeId, setEmployeeId] = useState('');
     const [ownerId, setOwnerId] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfileInfo = async () => {
           try {
             const role = getRoleBasedOnToken();
             let profileData;
-    
-            if (role === 'ROLE_OWNER') {
-              profileData = await fetchGetOwner();
-              setOwnerId(profileData.id);
-              console.log(profileData)
-            } else if (role === 'ROLE_EMPLOYEE') {
-              profileData = await fetchGetEmployee();
-            }
-            setProfileInfo(profileData);
+            profileData = await fetchGetOwner();
+            setOwnerId(profileData.id);
           } catch (error) {
             console.error('Error fetching profile information', error);
           }
@@ -43,11 +36,47 @@ export const OwnerDashboard = () => {
           alert('Failed to assign employee.');
         }
       };
+
+      const handleProducts = (e) => {
+        e.preventDefault();
+        try {
+          navigate('/products');
+        } catch (err) {
+          console.error('Error durante la navegación a la edición del perfil', err);
+        }
+    };
     
       return (
         <div>
           <h1 className='text-4xl font-bold m-5'>Owner Dashboard</h1>
-          <div>
+          <div className=' mb-5'>
+            <button 
+                onClick={handleProducts}
+                className='ml-2 p-3 px-10 bg-primary text-white rounded'
+            >
+                Products
+            </button>
+          </div>
+
+          <div className=' mb-5'>
+            <button 
+                onClick={handleProducts}
+                className='ml-2 p-3 px-10 bg-primary text-white rounded'
+            >
+                Suppliers
+            </button>
+          </div>
+
+          <div className=' mb-5'>
+            <button 
+                onClick={handleProducts}
+                className='ml-2 p-3 px-10 bg-primary text-white rounded'
+            >
+                Sales
+            </button>
+          </div>
+          <h2 className='text-xl font-bold m-5'>Add Employee</h2>
+          <div className=' mb-5'>
                 <input
                     type="text"
                     placeholder="Enter Employee ID"
@@ -62,6 +91,7 @@ export const OwnerDashboard = () => {
                     Assign Employee
                 </button>
             </div>
+    
         </div>
       );
 }
