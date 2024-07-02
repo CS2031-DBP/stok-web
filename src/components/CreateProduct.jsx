@@ -8,9 +8,9 @@ export const CreateProduct = () => {
     const [price, setPrice] = useState(0);
     const [category, setCategory] = useState('');
     const [quantity, setQuantity] = useState(0);
-    // const navigate = useNavigate();
     const [error, setError] = useState(null);
     const [ownerId, setOwnerId] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfileInfo = async () => {
@@ -43,6 +43,7 @@ export const CreateProduct = () => {
           console.log(product);
           const inventoryResponse = await fetchCreateInventory(ownerId, product.id, quantity);
           console.log(inventoryResponse);
+          navigate('/products')
         } catch (error) {
           console.log(error);
           setError('Error durante la creación de Producto');

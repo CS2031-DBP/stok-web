@@ -176,3 +176,18 @@ export const fetchCreateInventory = async (ownerId, productId, quantity) => {
         throw error;
     }
 };
+
+export const fetchgetInventories = async (ownerId, page, size) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/inventory/all/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page, size }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetInventories:', error);
+      throw error;
+    }
+};
