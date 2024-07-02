@@ -30,7 +30,7 @@ const Dashboard = () => {
         } catch (err) {
           console.error('Error durante la navegación a la edición del perfil', err);
         }
-      };
+    };
 
   return (
     <main className='grid grid-cols-2'>
