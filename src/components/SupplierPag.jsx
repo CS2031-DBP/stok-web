@@ -1,36 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { fetchgetSales, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
-import { SaleItem } from './SaleItem';
+import { fetchgetSuppliers, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
+import { SupplierItem } from './SupplierItem';
 
-const SalesPag = () => {
-    const [sales, setSales] = useState([]);
+const SupplierPag = () => {
+    const [suppliers, setSuppliers] = useState([]);
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(2);
     const [totalPages, setTotalPages] = useState(1);
     
     useEffect(() => {
-        const fetchSales = async () => {
+        const fetchSuppliers = async () => {
             try {
                 const role = getRoleBasedOnToken();
                 let profileData;
     
                 if (role === 'ROLE_OWNER') {
                     profileData = await fetchGetOwner();
-                    const data = await fetchgetSales(profileData.id, page, size);
-                    setSales(data.content);
+                    const data = await fetchgetSuppliers(profileData.id, page, size);
+                    setSuppliers(data.content);
                     setTotalPages(data.totalPages);
                 } else if (role === 'ROLE_EMPLOYEE') {
-                    profileData = await fetchGetEmployee();
-                    const data = await fetchgetSales(profileData.owner.id, page, size);
-                    setSales(data.content);
-                    setTotalPages(data.totalPages);
+                    alert("Sin permisos")
                 }
             } catch (error) {
-                console.error('Error al obtener los Sales:', error);
+                console.error('Error al obtener los Suppliers:', error);
             }
         };
 
-        fetchSales();
+        fetchSuppliers();
     }, [page, size]);
 
     const handlePageChange = (newPage) => {
@@ -43,7 +40,7 @@ const SalesPag = () => {
     };
   return (
     <section className="mx-16 mt-10 p-14 bg-gray-200 shadow-lg rounded-lg">
-            <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">Sales</h1>
+            <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">Suppliers</h1>
             <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center">
                     <button 
@@ -73,24 +70,23 @@ const SalesPag = () => {
                     />
                 </label>
             </div>
-            <section id='Sales'>
-                {sales.length > 0 ? (
-                    sales.map((sale, index) => (
-                        <SaleItem
+            <section id='Suppliers'>
+                {suppliers.length > 0 ? (
+                    suppliers.map((supplier, index) => (
+                        <SupplierItem
                             key={index}
-                            id={sale.id}
-                            name={sale.inventoryforSaleDto.product.name}
-                            amount={sale.amount}
-                            saleCant={sale.saleCant}
-                            createdAt={sale.createdAt}
+                            id={supplier.id}
+                            name={supplier.firstName + " " + supplier.lastName}
+                            email={supplier.email}
+                            phoneNumber={supplier.phoneNumber}
                         />
                     ))
                 ) : (
-                    <p className="text-center text-lg text-red-500">No se encontraron Sales.</p>
+                    <p className="text-center text-lg text-red-500">No se encontraron Suppliers.</p>
                 )}
             </section>
         </section>
   )
 }
 
-export default SalesPag
+export default SupplierPag

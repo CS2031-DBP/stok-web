@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard'
 import { EditProfile } from './pages/EditProfile'
 import Products from './pages/Products'
 import Sales from './pages/Sales'
+import Suppliers from './pages/Suppliers'
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile/edit" element={<EditProfile/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/sales" element={<Sales/>} />
+          <Route path="/suppliers" element={<Suppliers/>} />
         </Routes>
       </Router>
     </>

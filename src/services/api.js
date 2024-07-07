@@ -134,7 +134,7 @@ export const fetchAssignEmployee = async (ownerId, employeeId) => {
     }
 };
 
-// Product e Inventario
+// Product
 
 export const fetchAddProduct = async (name, description, price, category) => {
     try {
@@ -162,6 +162,22 @@ export const fetchGetProduct = async (id) => {
       throw error;
     }
 };
+
+export const fetchgetAllProducts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/product/findall`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetAllProducts:', error);
+      throw error;
+    }
+};
+
+// Inventory
 
 export const fetchCreateInventory = async (ownerId, productId, quantity) => {
     try {
@@ -233,6 +249,51 @@ export const fetchgetSales = async (ownerId, page, size) => {
       return response.data;
     } catch (error) {
       console.error('Error en fetchgetSales:', error);
+      throw error;
+    }
+};
+
+// Supplier
+
+export const fetchCreateSupplier = async (ownerId, firstName, lastName, email, phoneNumber) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/suppliers/create`, {ownerId, firstName, lastName, email, phoneNumber},
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchCreateSupplier:', error);
+        throw error;
+    }
+};
+
+export const fetchAddProductToSupplier = async (ownerId, supplierId, productId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/suppliers/${ownerId}/${supplierId}/${productId}`,
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchAddProductToSupplier:', error);
+        throw error;
+    }
+};
+
+export const fetchgetSuppliers = async (ownerId, page, size) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/suppliers/allpage/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page, size }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetInventories:', error);
       throw error;
     }
 };

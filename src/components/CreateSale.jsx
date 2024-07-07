@@ -86,7 +86,7 @@ export const CreateSale = () => {
                         {showDropdown && filteredInventories.length > 0 && (
                             <ul
                                 className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-300 max-h-60 overflow-auto"
-                                onMouseDown={(e) => e.preventDefault()} // Prevents input blur when clicking on the list
+                                onMouseDown={(e) => e.preventDefault()}
                             >
                                 {filteredInventories.map(inventory => (
                                     <li
