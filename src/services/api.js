@@ -221,3 +221,18 @@ export const fetchCreateSale = async (ownerId, inventoryId, amount) => {
         throw error;
     }
 };
+
+export const fetchgetSales = async (ownerId, page, size) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/sales/all/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page, size }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetSales:', error);
+      throw error;
+    }
+};
