@@ -25,7 +25,7 @@ export const InventoryItem = ({ id, name, description, price, category, stock })
 
       <div className="flex items-center mb-2">
         <b className="w-32 text-gray-700">Stock:</b>
-        <p id='price' className="ml-2 text-gray-900">{stock}</p>
+        <p id='stock' className="ml-2 text-gray-900">{stock}</p>
       </div>
     </section>
   )

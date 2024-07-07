@@ -50,6 +50,11 @@ export const CreateProduct = () => {
         }
     }
 
+    useEffect(() => {
+        console.log("Los valores del formulario han cambiado.");
+    }, [name, description, price, category, quantity]);
+ 
+
     return (
         <section className="mx-16 mt-10 p-14 bg-gray-200 shadow-lg rounded-lg">
             <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">Crear Producto</h1>
