@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard'
 import { EditProfile } from './pages/EditProfile'
 import Products from './pages/Products'
 import Sales from './pages/Sales'
+import Home from  './pages/Home'
 
 function App() {
 
@@ -17,10 +18,11 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/login"/>}/>
+          <Route path="/" element={<Navigate to="/Home"/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path='/dashboard' element={<Dashboard/>} />
+          <Route path='/home' element={<Home></Home>}/>
           <Route path="/profile/edit" element={<EditProfile/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/sales" element={<Sales/>} />
