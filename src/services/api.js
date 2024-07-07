@@ -191,3 +191,33 @@ export const fetchgetInventories = async (ownerId, page, size) => {
       throw error;
     }
 };
+
+export const fetchgetAllInventories = async (ownerId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/inventory/owner/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetAllInventories:', error);
+      throw error;
+    }
+};
+
+// Sales
+
+export const fetchCreateSale = async (ownerId, inventoryId, amount) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/sales/create`, {ownerId, inventoryId, amount},
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchCreateSale:', error);
+        throw error;
+    }
+};

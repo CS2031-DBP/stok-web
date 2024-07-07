@@ -9,9 +9,9 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import { EditProfile } from './pages/EditProfile'
 import Products from './pages/Products'
+import Sales from './pages/Sales'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -23,6 +23,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path="/profile/edit" element={<EditProfile/>} />
           <Route path="/products" element={<Products/>} />
+          <Route path="/sales" element={<Sales/>} />
         </Routes>
       </Router>
     </>
