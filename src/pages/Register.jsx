@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './register.css';
 import owner from './owner.png';
 import employee from './employee.png';
+import {Link} from "react-router-dom";
 
 const SignUp = () => {
   const [step, setStep] = useState(1);
@@ -46,7 +47,7 @@ const SignUp = () => {
             <div className="signin-form">
               <h1>Sign Up</h1>
               <input type="text" placeholder="Enter code"/>
-              <button onClick={nextStep} className="continue-button-h">Continue</button>
+              <Link to="/home" className="continue">Continue</Link>
             </div>
         )}
 

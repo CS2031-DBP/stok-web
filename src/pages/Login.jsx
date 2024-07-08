@@ -1,6 +1,7 @@
 // SignIn.jsx
 import React, { useState } from 'react';
 import './Login.css';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
     const [activeTab, setActiveTab] = useState('phone');
@@ -30,6 +31,7 @@ const SignIn = () => {
                     <input type="text" id="phone" name="phone" placeholder="PE +51"/>
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Password"/>
+                    <Link to="/home" className="continue">Continue</Link>
                 </form>
             )}
 
@@ -39,9 +41,10 @@ const SignIn = () => {
                     <input type="text" id="email" name="email" placeholder="Mail or Username"/>
                     <label htmlFor="password">Password</label>
                     <input type="password" id="password" name="password" placeholder="Password"/>
+                    <Link to="/home" className="continue">Continue</Link>
                 </form>
             )}
-            <button href="/home" type="submit" className="continue-button">Continue</button>
+
             <a href="/register" className="forgot-link">You don't have an account yet? Register</a>
         </div>
     );
