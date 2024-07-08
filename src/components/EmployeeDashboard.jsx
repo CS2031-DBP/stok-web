@@ -36,6 +36,16 @@ export const EmployeeDashboard = () => {
         console.error('Error durante la navegación a la edición del perfil', err);
       }
   };
+
+  const handleSales = (e) => {
+    e.preventDefault();
+    try {
+      navigate('/sales');
+    } catch (err) {
+      console.error('Error durante la navegación a Sales', err);
+    }
+
+  };
   
     return (
       <div>
@@ -51,16 +61,7 @@ export const EmployeeDashboard = () => {
 
         <div className=' mb-5'>
           <button 
-              onClick={handleProducts}
-              className='ml-2 p-3 px-10 bg-primary text-white rounded'
-          >
-              Suppliers
-          </button>
-        </div>
-
-        <div className=' mb-5'>
-          <button 
-              onClick={handleProducts}
+              onClick={handleSales}
               className='ml-2 p-3 px-10 bg-primary text-white rounded'
           >
               Sales

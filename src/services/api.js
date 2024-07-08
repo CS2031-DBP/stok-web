@@ -134,7 +134,7 @@ export const fetchAssignEmployee = async (ownerId, employeeId) => {
     }
 };
 
-// Product e Inventario
+// Product
 
 export const fetchAddProduct = async (name, description, price, category) => {
     try {
@@ -162,6 +162,48 @@ export const fetchGetProduct = async (id) => {
       throw error;
     }
 };
+
+export const fetchgetAllProducts = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/product/findall`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetAllProducts:', error);
+      throw error;
+    }
+};
+
+export const fetchUpdateProduct = async (productId, product) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`${BACKEND_URL}/product/update/${productId}`, product, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchUpdateProduct:', error);
+        throw error;
+    }
+};
+
+export const fetchGetProductById = async (productId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/product/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchGetProductById:', error);
+      throw error;
+    }
+};
+
+// Inventory
 
 export const fetchCreateInventory = async (ownerId, productId, quantity) => {
     try {
@@ -206,6 +248,61 @@ export const fetchgetAllInventories = async (ownerId) => {
     }
 };
 
+export const fetchGetInventory = async (ownerId, inventoryId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/inventory/find/${ownerId}/${inventoryId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchGetInventory:', error);
+      throw error;
+    }
+};
+
+export const fetchDeleteInventory = async (inventoryId, ownerId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BACKEND_URL}/inventory/delete/${inventoryId}/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchDeleteOwner:', error);
+        throw error;
+    }
+};
+
+// REDUCIR STOCK
+export const fetchReduceInventory = async (ownerId, inventoryId, quantity) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/inventory/${ownerId}/${inventoryId}/reduce/${quantity}`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchReduceInventory:', error);
+        throw error;
+    }
+};
+
+// AUMENTAR STOCK
+export const fetchIncreaseInventory = async (ownerId, inventoryId, quantity) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/inventory/${ownerId}/${inventoryId}/increase/${quantity}`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchIncreaseInventory:', error);
+        throw error;
+    }
+};
+
 // Sales
 
 export const fetchCreateSale = async (ownerId, inventoryId, amount) => {
@@ -219,5 +316,65 @@ export const fetchCreateSale = async (ownerId, inventoryId, amount) => {
     } catch (error) {
         console.error('Error en fetchCreateSale:', error);
         throw error;
+    }
+};
+
+export const fetchgetSales = async (ownerId, page, size) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/sales/all/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page, size }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetSales:', error);
+      throw error;
+    }
+};
+
+// Supplier
+
+export const fetchCreateSupplier = async (ownerId, firstName, lastName, email, phoneNumber) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/suppliers/create`, {ownerId, firstName, lastName, email, phoneNumber},
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchCreateSupplier:', error);
+        throw error;
+    }
+};
+
+export const fetchAddProductToSupplier = async (ownerId, supplierId, productId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/suppliers/${ownerId}/${supplierId}/${productId}`,
+            {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchAddProductToSupplier:', error);
+        throw error;
+    }
+};
+
+export const fetchgetSuppliers = async (ownerId, page, size) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/suppliers/allpage/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page, size }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchgetInventories:', error);
+      throw error;
     }
 };

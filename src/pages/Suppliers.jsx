@@ -1,21 +1,21 @@
 import React from 'react'
-import { CreateSale } from '../components/CreateSale'
-import SalesPag from '../components/SalesPag'
+import CreateSupplier from '../components/CreateSupplier'
+import SupplierPag from '../components/SupplierPag'
 
-const Sales = () => {
+const Suppliers = () => {
   return (
     <main className='grid grid-cols-2'>
 
       <div className="mx-16 mt-10 p-10 bg-gray-200 shadow-lg rounded-lg">
-        <CreateSale></CreateSale>
+        <SupplierPag></SupplierPag>
       </div>
 
       <div className="mx-16 mt-10 p-10 bg-gray-200 shadow-lg rounded-lg">
-        <SalesPag></SalesPag>
+        <CreateSupplier></CreateSupplier>
       </div>
 
     </main>
   )
 }
 
-export default Sales
+export default Suppliers

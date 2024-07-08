@@ -1,21 +1,21 @@
 import React from 'react'
-import { CreateSale } from '../components/CreateSale'
-import SalesPag from '../components/SalesPag'
+import InventoryInfo from '../components/InventoryInfo'
+import EditInventoryForm from '../components/EditInventoryForm'
 
-const Sales = () => {
+const InventoryDetails = () => {
   return (
     <main className='grid grid-cols-2'>
 
       <div className="mx-16 mt-10 p-10 bg-gray-200 shadow-lg rounded-lg">
-        <CreateSale></CreateSale>
+        <InventoryInfo></InventoryInfo>
       </div>
 
       <div className="mx-16 mt-10 p-10 bg-gray-200 shadow-lg rounded-lg">
-        <SalesPag></SalesPag>
+        <EditInventoryForm></EditInventoryForm>
       </div>
 
     </main>
   )
 }
 
-export default Sales
+export default InventoryDetails
