@@ -32,11 +32,11 @@ const RegisterForm = () => {
     <section className="signup-container">
       <h1>Registro</h1>
       <form onSubmit={handleRegister}>
-        <div className="sm:col-span-4 my-5">
+        <div className="ssignin-form">
           <label htmlFor="firstName" className="block text-lg font-medium leading-6 text-gray-900">
             Nombre
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="firstName"
               name="firstName"
@@ -51,7 +51,7 @@ const RegisterForm = () => {
           <label htmlFor="lastName" className="block text-lg font-medium leading-6 text-gray-900">
             Apellido
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="lastName"
               name="lastName"
@@ -66,7 +66,7 @@ const RegisterForm = () => {
           <label htmlFor="email" className="block text-lg font-medium leading-6 text-gray-900">
             Email
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="email"
               name="email"
@@ -82,7 +82,7 @@ const RegisterForm = () => {
           <label htmlFor="password" className="block text-lg font-medium leading-6 text-gray-900">
             Contraseña
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="password"
               name="password"
@@ -128,7 +128,7 @@ const RegisterForm = () => {
           <label htmlFor="phoneNumber" className="block text-lg font-medium leading-6 text-gray-900">
             Teléfono
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="phoneNumber"
               name="phoneNumber"
