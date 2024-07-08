@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Profile } from '../components/Profile';
 import {Link, useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -14,27 +14,26 @@ const Dashboard = () => {
     const [role, setRole] = useState('');
 
     useEffect(() => {
-      const fetchUserRole = async () => {
-        try {
-          const userRole = await getRoleBasedOnToken();
-          setRole(userRole);
-        } catch (error) {
-          console.error('Error fetching user role', error);
-        }
-      };
-  
-      fetchUserRole();
+        const fetchUserRole = async () => {
+            try {
+                const userRole = await getRoleBasedOnToken();
+                setRole(userRole);
+            } catch (error) {
+                console.error('Error fetching user role', error);
+            }
+        };
+
+        fetchUserRole();
     }, []);
 
     const handleEditProfile = (e) => {
         e.preventDefault();
         try {
-          navigate('/profile/edit');
+            navigate('/profile/edit');
         } catch (err) {
-          console.error('Error durante la navegación a la edición del perfil', err);
+            console.error('Error durante la navegación a la edición del perfil', err);
         }
     };
-
   return (
       <div>
           <header>
@@ -71,4 +70,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default Dashboard;
