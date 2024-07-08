@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { fetchgetInventories, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
 import { InventoryItem } from './InventoryItem';
 
@@ -7,13 +8,14 @@ const Inventories = () => {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(2);
     const [totalPages, setTotalPages] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchInventories = async () => {
             try {
                 const role = getRoleBasedOnToken();
                 let profileData;
-    
+
                 if (role === 'ROLE_OWNER') {
                     profileData = await fetchGetOwner();
                     const data = await fetchgetInventories(profileData.id, page, size);
@@ -40,6 +42,12 @@ const Inventories = () => {
     const handleSizeChange = (event) => {
         setSize(Number(event.target.value));
         setPage(0);
+    };
+
+    const handleViewDetails = (productId, inventoryId) => {
+        localStorage.setItem('productId', productId);
+        localStorage.setItem('inventoryId', inventoryId);
+        navigate(`/inventoryDetails`);
     };
 
     return (
@@ -77,15 +85,22 @@ const Inventories = () => {
             <section id='Inventories'>
                 {inventories.length > 0 ? (
                     inventories.map((inventory, index) => (
-                        <InventoryItem
-                            key={index}
-                            id={inventory.product.id}
-                            name={inventory.product.name}
-                            description={inventory.product.description}
-                            price={inventory.product.price}
-                            category={inventory.product.category}
-                            stock={inventory.stock}
-                        />
+                        <div key={index} className="inventory-item flex justify-between items-center mb-4 bg-white p-4 rounded shadow-md">
+                            <InventoryItem
+                                id={inventory.product.id}
+                                name={inventory.product.name}
+                                description={inventory.product.description}
+                                price={inventory.product.price}
+                                category={inventory.product.category}
+                                stock={inventory.stock}
+                            />
+                            <button 
+                                onClick={() => handleViewDetails(inventory.product.id, inventory.id)}
+                                className="ml-4 bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                            >
+                                Ver Detalles
+                            </button>
+                        </div>
                     ))
                 ) : (
                     <p className="text-center text-lg text-red-500">No se encontraron Productos.</p>

@@ -177,6 +177,32 @@ export const fetchgetAllProducts = async () => {
     }
 };
 
+export const fetchUpdateProduct = async (productId, product) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`${BACKEND_URL}/product/update/${productId}`, product, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchUpdateProduct:', error);
+        throw error;
+    }
+};
+
+export const fetchGetProductById = async (productId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/product/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchGetProductById:', error);
+      throw error;
+    }
+};
+
 // Inventory
 
 export const fetchCreateInventory = async (ownerId, productId, quantity) => {
@@ -219,6 +245,61 @@ export const fetchgetAllInventories = async (ownerId) => {
     } catch (error) {
       console.error('Error en fetchgetAllInventories:', error);
       throw error;
+    }
+};
+
+export const fetchGetInventory = async (ownerId, inventoryId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${BACKEND_URL}/inventory/find/${ownerId}/${inventoryId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      console.log(response.data)
+      return response.data;
+    } catch (error) {
+      console.error('Error en fetchGetInventory:', error);
+      throw error;
+    }
+};
+
+export const fetchDeleteInventory = async (inventoryId, ownerId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BACKEND_URL}/inventory/delete/${inventoryId}/${ownerId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchDeleteOwner:', error);
+        throw error;
+    }
+};
+
+// REDUCIR STOCK
+export const fetchReduceInventory = async (ownerId, inventoryId, quantity) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/inventory/${ownerId}/${inventoryId}/reduce/${quantity}`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchReduceInventory:', error);
+        throw error;
+    }
+};
+
+// AUMENTAR STOCK
+export const fetchIncreaseInventory = async (ownerId, inventoryId, quantity) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/inventory/${ownerId}/${inventoryId}/increase/${quantity}`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchIncreaseInventory:', error);
+        throw error;
     }
 };
 
