@@ -86,7 +86,7 @@ const SalesPag = () => {
                         />
                     ))
                 ) : (
-                    <p className="text-center text-lg text-red-500">No se encontraron Productos.</p>
+                    <p className="text-center text-lg text-red-500">No se encontraron Sales.</p>
                 )}
             </section>
         </section>

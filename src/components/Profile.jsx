@@ -3,6 +3,7 @@ import { fetchGetOwner, fetchGetEmployee, getRoleBasedOnToken } from '../service
 import { useState, useEffect } from 'react';
 
 export const Profile = () => {
+    const [ownerId, setOwnerId] = useState('');
     const [profileInfo, setProfileInfo] = useState({});
 
     useEffect(() => {

@@ -46,6 +46,16 @@ export const OwnerDashboard = () => {
         } 
       };
 
+      const handleSuppliers = (e) => {
+        e.preventDefault();
+        try {
+          navigate('/suppliers');
+        } catch (err) {
+          console.error('Error durante la navegación a Suppliers', err);
+        }
+
+      };
+
       const handleSales = (e) => {
         e.preventDefault();
         try {
@@ -70,7 +80,7 @@ export const OwnerDashboard = () => {
 
           <div className=' mb-5'>
             <button 
-                onClick={handleProducts}
+                onClick={handleSuppliers}
                 className='ml-2 p-3 px-10 bg-primary text-white rounded'
             >
                 Suppliers

@@ -2,6 +2,7 @@ import React from 'react';
 import { fetchRegister } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import './register.css';
 
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -29,14 +30,14 @@ const RegisterForm = () => {
   };
 
   return (
-    <section className="mx-16 mt-10 p-14 bg-gray-200 shadow-lg rounded-lg">
-      <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">Registro en Stok</h1>
+    <section className="signup-container">
+      <h1>Registro</h1>
       <form onSubmit={handleRegister}>
-        <div className="sm:col-span-4 my-5">
+        <div className="ssignin-form">
           <label htmlFor="firstName" className="block text-lg font-medium leading-6 text-gray-900">
             Nombre
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="firstName"
               name="firstName"
@@ -51,7 +52,7 @@ const RegisterForm = () => {
           <label htmlFor="lastName" className="block text-lg font-medium leading-6 text-gray-900">
             Apellido
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="lastName"
               name="lastName"
@@ -66,7 +67,7 @@ const RegisterForm = () => {
           <label htmlFor="email" className="block text-lg font-medium leading-6 text-gray-900">
             Email
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="email"
               name="email"
@@ -82,7 +83,7 @@ const RegisterForm = () => {
           <label htmlFor="password" className="block text-lg font-medium leading-6 text-gray-900">
             Contraseña
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="password"
               name="password"
@@ -128,7 +129,7 @@ const RegisterForm = () => {
           <label htmlFor="phoneNumber" className="block text-lg font-medium leading-6 text-gray-900">
             Teléfono
           </label>
-          <div className="mt-2">
+          <div className="signin-form">
             <input
               id="phoneNumber"
               name="phoneNumber"
@@ -147,7 +148,7 @@ const RegisterForm = () => {
         <div className="flex justify-center">
           <button
             id="registerSubmit"
-            className="bg-sky-400 text-white font-bold mx-6 py-2 px-4 my-1 rounded-full cursor-pointer"
+            className="continue-button-h"
             type="submit"
           >
             Registrar

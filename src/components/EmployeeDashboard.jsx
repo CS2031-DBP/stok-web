@@ -61,15 +61,6 @@ export const EmployeeDashboard = () => {
 
         <div className=' mb-5'>
           <button 
-              onClick={handleProducts}
-              className='ml-2 p-3 px-10 bg-primary text-white rounded'
-          >
-              Suppliers
-          </button>
-        </div>
-
-        <div className=' mb-5'>
-          <button 
               onClick={handleSales}
               className='ml-2 p-3 px-10 bg-primary text-white rounded'
           >
