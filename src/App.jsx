@@ -12,17 +12,19 @@ import Products from './pages/Products'
 import Sales from './pages/Sales'
 import Suppliers from './pages/Suppliers'
 import InventoryDetails from './pages/InventoryDetails'
+import Home from  './pages/Home'
 
-function App() {
+const App = () => {
 
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/login"/>}/>
+          <Route path="/" element={<Navigate to="/Home"/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
           <Route path='/dashboard' element={<Dashboard/>} />
+          <Route path='/home' element={<Home></Home>}/>
           <Route path="/profile/edit" element={<EditProfile/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/sales" element={<Sales/>} />
@@ -35,3 +37,4 @@ function App() {
 }
 
 export default App
+
