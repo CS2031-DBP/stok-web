@@ -3,7 +3,6 @@ import { fetchRegister } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -30,8 +29,8 @@ const RegisterForm = () => {
   };
 
   return (
-    <section className="mx-16 mt-10 p-14 bg-gray-200 shadow-lg rounded-lg">
-      <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">Registro en Stok</h1>
+    <section className="signup-container">
+      <h1>Registro</h1>
       <form onSubmit={handleRegister}>
         <div className="sm:col-span-4 my-5">
           <label htmlFor="firstName" className="block text-lg font-medium leading-6 text-gray-900">
@@ -148,7 +147,7 @@ const RegisterForm = () => {
         <div className="flex justify-center">
           <button
             id="registerSubmit"
-            className="bg-sky-400 text-white font-bold mx-6 py-2 px-4 my-1 rounded-full cursor-pointer"
+            className="continue-button-h"
             type="submit"
           >
             Registrar
