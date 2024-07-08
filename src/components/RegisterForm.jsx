@@ -2,6 +2,7 @@ import React from 'react';
 import { fetchRegister } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import './register.css';
 
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState('');
