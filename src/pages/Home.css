@@ -125,3 +125,13 @@ nav ul img {
     height: 40px;
     margin-left: 10px; /* Add some space between the profile icon and the links */
 }
+
+.cuadros {
+    margin-top: 100px;
+    margin-left: 20px;
+    margin-right: 20px;/* Equivalente a mx-16 y mt-10 */
+    padding: 2.5rem; /* Equivalente a p-10 */
+    background-color: #E2E8F0; /* Equivalente a bg-gray-200 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Equivalente a shadow-lg */
+    border-radius: 0.75rem; /* Equivalente a rounded-lg */
+}

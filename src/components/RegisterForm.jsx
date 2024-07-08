@@ -3,6 +3,7 @@ import { fetchRegister } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+
 const RegisterForm = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
