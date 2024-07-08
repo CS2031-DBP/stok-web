@@ -1,0 +1,97 @@
+.signin-container {
+    width: 400px;
+    padding: 20px;
+    background: #D0E1F5;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    position: relative;
+    font-family: Inter, sans-serif;
+}
+
+.signin-container h1{
+    color: #fff;
+    text-align: center;
+    margin: 30px;
+    font-family: Inter, sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.tab {
+    width: 48%;
+    padding: 10px;
+    border: none;
+    background: #6FABC3;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 40px;
+}
+
+.tab.active {
+    background: #5f7a9b;
+    color: #fff;
+}
+
+.signin-form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+    align-items: center;
+
+}
+
+.signin-form label {
+    color: #000;
+    margin-bottom: 5px;
+    text-align: left;
+}
+
+.signin-form input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 40px;
+    background: #fff;
+    width: 278px;
+    height: 54px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-link {
+    color: #1e2d40;
+    font-size: 0.8rem;
+    margin-top: 20px;
+    text-align: center;
+    display: block;
+}
+
+.continue-button {
+    padding: 10px;
+    border: none;
+    border-radius: 40px;
+    background: #1e2d40;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 282px;
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.continue-button:hover {
+    background: #324762;
+}

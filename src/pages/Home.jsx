@@ -14,7 +14,7 @@ const Home = () => {
                         <li><a href="/register">Register</a></li>
                     </ul>
                 </nav>
-                <hr/>
+
             </header>
         </div>
     )
