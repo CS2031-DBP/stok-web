@@ -43,9 +43,6 @@ const Dashboard = () => {
                       <li><a href="/login">Login</a></li>
                       <li><a href="/register">Register</a></li>
                   </ul>
-                  <Link to="/profile/edit" className="profile-link">
-                      <img src={profilelogo} alt="Profile" className="profile-logo"/>
-                  </Link>
               </nav>
           </header>
           <main className='grid grid-cols-2'>
