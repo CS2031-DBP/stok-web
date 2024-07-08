@@ -1,23 +1,16 @@
 body, html {
     height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#root {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #1F798B, #D0E1F5);
-    text-align: center;
-    font-family: SansSerif, sans-serif;
-}
 
 header {
     display: flex;
-    background-color: #E1E5F1;
+    background-color: #012B39;
     color: #5B5A56;
     padding: 1px;
     text-align: center;
@@ -25,7 +18,7 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    font-family: "Beaufort for LOL Heavy", sans-serif;
+    font-family: Inter, sans-serif;
 }
 
 nav {
@@ -51,7 +44,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #012B39;
+    color: #ffffff;
     text-decoration: none;
     font-size: 1.1em;
     font-weight: bold;
@@ -80,6 +73,55 @@ nav ul img {
 
 .decoration-line{
     width: 100%;
-    height: 60px;
+    height: 80px;
     margin: 0;
+}
+
+.button-container {
+    display: flex;
+
+    margin-top: 100px;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.nav-button {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 50px 0;
+}
+
+.nav-button:hover {
+    background-color: #D0E1F5;
+}
+
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-links li {
+    margin: 0 10px;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+}
+
+.profile-logo {
+    width: 60px; /* Adjust the size of the profile logo as needed */
+    height: 40px;
+    margin-left: 10px; /* Add some space between the profile icon and the links */
 }

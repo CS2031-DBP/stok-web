@@ -12,7 +12,7 @@ import Products from './pages/Products'
 import Sales from './pages/Sales'
 import Home from  './pages/Home'
 
-function App() {
+const App = () => {
 
   return (
     <>
