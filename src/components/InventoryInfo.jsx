@@ -97,21 +97,23 @@ const InventoryInfo = () => {
       <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">
         Información del Inventario
       </h1>
-      <div className="inventory-info bg-white p-6 rounded shadow-md">
-        <h2 className="text-3xl font-semibold mb-4">{inventoryInfo.product.name}</h2>
-        <ul className="list-disc pl-6">
-          <li className="text-xl mb-2">ID del Producto: {inventoryInfo.product.id}</li>
-          <li className="text-xl mb-2">Descripción: {inventoryInfo.product.description}</li>
-          <li className="text-xl mb-2">Precio: ${inventoryInfo.product.price}</li>
-          <li className="text-xl mb-2">Categoría: {inventoryInfo.product.category}</li>
-          <li className="text-xl mb-2">Stock: {inventoryInfo.stock}</li>
-        </ul>
-        <button
-          onClick={handleBackToInventories}
-          className="mt-6 bg-blue-500 text-white font-bold py-2 px-4 rounded"
-        >
-          Volver a Inventarios
-        </button>
+        <div className="inventory-info bg-white p-6 rounded-lg shadow-md mx-auto max-w-md">
+          <h2 className="text-3xl font-semibold text-center mb-6">{inventoryInfo.product.name}</h2>
+            <div className="text-base mb-4">
+              <p><strong>ID del Producto:</strong> {inventoryInfo.product.id}</p>
+              <p><strong>Descripción:</strong> {inventoryInfo.product.description}</p>
+              <p><strong>Precio:</strong> ${inventoryInfo.product.price}</p>
+              <p><strong>Categoría:</strong> {inventoryInfo.product.category}</p>
+              <p><strong>Stock:</strong> {inventoryInfo.stock}</p>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={handleBackToInventories}
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
+              >
+                Volver a Inventarios
+              </button>
+            </div>
       </div>
 
       <h2 className="text-center text-3xl font-bold leading-7 text-gray-900 m-9 my-12">

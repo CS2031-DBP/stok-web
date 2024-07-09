@@ -24,53 +24,54 @@ export const LoginForm = () => {
     }
   };
 
-
-
   return (
-      <section className="signin-container">
-        <h1 className="text-white text-6xl font-bold mb-8">Ingresar</h1>
-        <form onSubmit={handleSubmit} className="signin-form">
-          <div className="mb-8">
-            <label htmlFor="email" className="block text-lg text-left text-gray-900 mb-2">
-              Email
-            </label>
-            <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full py-3 px-6 mb-4 rounded-full bg-white shadow-sm focus:ring-2 focus:ring-indigo-600"
-            />
+    <section className="signin-container">
+      <h1 className="text-white text-6xl font-bold mb-8">Ingresar</h1>
+      <form onSubmit={handleSubmit} className="signin-form">
+        <div className="block text-lg font-medium leading-6 text-gray-900">
+          <label htmlFor="email" className="block text-lg font-medium leading-6 text-gray-900">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            onChange={(e) => setUsername(e.target.value)}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset bg-gray-200 ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+        <div className="block text-lg font-medium leading-6 text-gray-900">
+          <label htmlFor="password" className="block text-lg font-medium leading-6 text-gray-900">
+            Contraseña
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset bg-gray-200 ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+          />
+        </div>
+        {error && (
+          <div className="text-red-500 text-center mb-4">
+            {error}
           </div>
-          <div className="mb-8">
-            <label htmlFor="password" className="block text-lg text-left text-gray-900 mb-2">
-              Contraseña
-            </label>
-            <input
-                id="password"
-                name="password"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full py-3 px-6 mb-4 rounded-full bg-white shadow-sm focus:ring-2 focus:ring-indigo-600"
-            />
-          </div>
-          {error && (
-              <div className="text-red-500 text-center mb-4">
-                {error}
-              </div>
-          )}
-          <div className="flex justify-center">
-            <button id="loginSubmit" className="continue" type="submit">
-              Iniciar Sesión
-            </button>
-          </div>
-          <div className="flex justify-center">
-            <button id="loginSubmit" className="continue" onClick={() => navigate('/register') }>
-              Register
-            </button>
-          </div>
-        </form>
-      </section>
+        )}
+        <div className="flex justify-center mb-4">
+          <button id="loginSubmit" className="continue" type="submit">
+            Iniciar Sesión
+          </button>
+        </div>
+        <div className="flex justify-center">
+          <button
+            className="mt-3 text-blue-500 hover:text-blue-600"
+            onClick={() => { navigate('/register') }}
+          >
+            Don't have an account? Register
+          </button>
+        </div>
+      </form>
+    </section>
   );
 };

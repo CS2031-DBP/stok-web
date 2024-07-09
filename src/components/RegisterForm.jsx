@@ -33,7 +33,7 @@ const RegisterForm = () => {
     <section className="signup-container">
       <h1>Registro</h1>
       <form onSubmit={handleRegister}>
-        <div className="ssignin-form">
+        <div className="sm:col-span-4 my-5">
           <label htmlFor="firstName" className="block text-lg font-medium leading-6 text-gray-900">
             Nombre
           </label>
@@ -96,33 +96,21 @@ const RegisterForm = () => {
         </div>
         <div className="sm:col-span-4 my-5">
           <label className="block text-lg font-medium leading-6 text-gray-900">¿Eres propietario?</label>
-          <div className="mt-2 flex items-center">
-            <input
+          <div className="mt-2 items-center">
+            <button
               id="owner"
-              name="isOwner"
-              type="radio"
-              value="owner"
-              checked={isOwner === true}
-              onChange={() => setIsOwner(true)}
-              className="mr-2"
-            />
-            <label htmlFor="owner" className="text-gray-900">
+              className={`mr-5 py-2 px-4 font-medium rounded ${isOwner === true ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'}`}
+              onClick={() => setIsOwner(true)}
+            >
               Sí
-            </label>
-          </div>
-          <div className="mt-2 flex items-center">
-            <input
+            </button>
+            <button
               id="employee"
-              name="isOwner"
-              type="radio"
-              value="employee"
-              checked={isOwner === false}
-              onChange={() => setIsOwner(false)}
-              className="mr-2"
-            />
-            <label htmlFor="employee" className="text-gray-900">
+              className={`ml-5 py-2 px-4 font-medium rounded ${isOwner === false ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'}`}
+              onClick={() => setIsOwner(false)}
+            >
               No
-            </label>
+            </button>
           </div>
         </div>
         <div className="sm:col-span-4 my-5">
@@ -145,13 +133,19 @@ const RegisterForm = () => {
             {error}
           </div>
         )}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center">
           <button
             id="registerSubmit"
             className="continue-button-h"
             type="submit"
           >
             Registrar
+          </button>
+          <button
+            className="mt-4 text-blue-500 hover:text-blue-600"
+            onClick={() => { navigate('/login') }}
+          >
+            Already registered? Log in here.
           </button>
         </div>
       </form>

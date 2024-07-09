@@ -51,14 +51,14 @@ const Inventories = () => {
     };
 
     return (
-        <section className="mx-16 mt-10 p-14 bg-gray-200 shadow-lg rounded-lg">
-            <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">Inventarios</h1>
+        <section className="mx-auto mt-10 p-6 bg-white shadow-md rounded-lg max-w-4xl">
+            <h1 className="text-center text-3xl font-bold text-gray-900 mb-6">Inventarios</h1>
             <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center">
                     <button 
                         onClick={() => handlePageChange(page - 1)} 
                         disabled={page === 0}
-                        className={`bg-primary text-white font-bold py-2 px-4 rounded ${page === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                        className={`px-4 py-2 font-bold rounded text-white ${page === 0 ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-500 hover:bg-indigo-600 cursor-pointer'}`}
                     >
                         Anterior
                     </button>
@@ -66,26 +66,26 @@ const Inventories = () => {
                     <button 
                         onClick={() => handlePageChange(page + 1)} 
                         disabled={page >= totalPages - 1}
-                        className={`bg-primary text-white font-bold py-2 px-4 rounded ${page >= totalPages - 1 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                        className={`px-4 py-2 font-bold rounded text-white ${page >= totalPages - 1 ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-500 hover:bg-indigo-600 cursor-pointer'}`}
                     >
                         Siguiente
                     </button>
                 </div>
                 <label className="flex items-center">
-                    <span className="mr-2 ml-4 text-sm">Tamaño de página:</span>
+                    <span className="text-sm mr-2">Tamaño de página:</span>
                     <input 
                         type="number" 
                         value={size} 
                         onChange={handleSizeChange} 
                         min="1"
-                        className="block w-16 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset bg-gray-200 ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="w-16 text-center rounded-md bg-gray-200 focus:bg-white focus:ring-2 focus:ring-indigo-500"
                     />
                 </label>
             </div>
             <section id='Inventories'>
                 {inventories.length > 0 ? (
                     inventories.map((inventory, index) => (
-                        <div key={index} className="inventory-item flex justify-between items-center mb-4 bg-white p-4 rounded shadow-md">
+                        <div key={index} className="flex justify-between items-center mb-4 p-4 rounded shadow bg-gray-50">
                             <InventoryItem
                                 id={inventory.product.id}
                                 name={inventory.product.name}
@@ -96,7 +96,7 @@ const Inventories = () => {
                             />
                             <button 
                                 onClick={() => handleViewDetails(inventory.product.id, inventory.id)}
-                                className="ml-4 bg-blue-500 text-white font-bold py-2 px-4 rounded"
+                                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
                             >
                                 Ver Detalles
                             </button>
@@ -107,7 +107,6 @@ const Inventories = () => {
                 )}
             </section>
         </section>
-    );
+    );    
 };
-
 export default Inventories;

@@ -25,17 +25,17 @@ export const Profile = () => {
   
       fetchProfileInfo();
     }, []);
-  return (
-    <article>
-      <h1 className='text-4xl font-bold m-5'>{profileInfo && profileInfo.role === 'OWNER' ? 'Owner' : profileInfo && profileInfo.role === 'EMPLOYEE' ? 'Employee' : 'Perfil'}</h1>
-      <section className='grid grid-cols-2'>
-        <ul className='list-disc'>
-        <li id="profileId" className='text-2xl'>ID: {profileInfo && profileInfo.id}</li>
-          <li id="profileNames" className='text-2xl'>Name: {profileInfo && profileInfo.firstName + " " + profileInfo.lastName}</li>
-          <li id='profileEmail' className='text-2xl'>Email: {profileInfo && profileInfo.email}</li>
-          <li id='profilePhone' className='text-2xl'>Phone Number: {profileInfo && profileInfo.phoneNumber}</li>
-        </ul>
-      </section>
-    </article>
-  )
+    return (
+      <article className="flex flex-col items-center justify-center bg-gray-100">
+        <h1 className='text-4xl font-bold my-5'>{profileInfo && (profileInfo.role === 'OWNER' ? 'Owner' : (profileInfo.role === 'EMPLOYEE' ? 'Employee' : 'Perfil'))}</h1>
+        <section className='bg-white p-6 rounded-lg shadow-md text-2xl'>
+          <div className="text-lg mb-4">
+            <p><strong>ID:</strong> {profileInfo && profileInfo.id}</p>
+            <p><strong>Name:</strong> {profileInfo && profileInfo.firstName + " " + profileInfo.lastName}</p>
+            <p><strong>Email:</strong> {profileInfo && profileInfo.email}</p>
+            <p><strong>Phone Number:</strong> {profileInfo && profileInfo.phoneNumber}</p>
+          </div>
+        </section>
+      </article>
+  )  
 }
