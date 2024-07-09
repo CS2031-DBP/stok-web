@@ -1,7 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = 'http://192.168.100.68:8080';
 
 export const getRoleBasedOnToken = () => {
     const token = localStorage.getItem('token');

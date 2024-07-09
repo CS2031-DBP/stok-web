@@ -24,6 +24,8 @@ export const LoginForm = () => {
     }
   };
 
+
+
   return (
       <section className="signin-container">
         <h1 className="text-white text-6xl font-bold mb-8">Ingresar</h1>
@@ -61,6 +63,11 @@ export const LoginForm = () => {
           <div className="flex justify-center">
             <button id="loginSubmit" className="continue" type="submit">
               Iniciar Sesión
+            </button>
+          </div>
+          <div className="flex justify-center">
+            <button id="loginSubmit" className="continue" onClick={() => navigate('/register') }>
+              Register
             </button>
           </div>
         </form>
