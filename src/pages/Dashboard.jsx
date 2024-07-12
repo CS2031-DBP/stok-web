@@ -56,6 +56,15 @@ const Dashboard = () => {
                           Log Out
                       </button>
                   </div>
+                  <div className='flex justify-center'>
+                      <button
+                          id='editProfile'
+                          className='bg-primary text-white font-bold py-2 px-20 mt-5 rounded-full cursor-pointer'
+                          onClick={() => navigate('/codebar')}
+                      >
+                          BarCode128
+                      </button>
+                  </div>
               </div>
 
               <div className="cuadros">

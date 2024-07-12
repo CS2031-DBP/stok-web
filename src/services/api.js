@@ -1,7 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const BACKEND_URL = 'http://192.168.100.68:8080';
+const BACKEND_URL = 'http://10.100.244.243:8080';
 
 export const getRoleBasedOnToken = () => {
     const token = localStorage.getItem('token');
@@ -376,5 +376,21 @@ export const fetchgetSuppliers = async (ownerId, page, size) => {
     } catch (error) {
       console.error('Error en fetchgetInventories:', error);
       throw error;
+    }
+};
+
+export const fetchgetnameProduct = async (name) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${BACKEND_URL}/product/findbyname`, {
+            headers: { Authorization: `Bearer ${token}` },
+            params: { name: name }
+        });
+        console.log(response.data)
+        return response.data;
+    }
+    catch (error) {
+        console.error('Error en fetchgetnameProduct:', error);
+        throw error;
     }
 };

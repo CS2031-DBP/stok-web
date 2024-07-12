@@ -9,6 +9,7 @@ import Products from './pages/Products'
 import Sales from './pages/Sales'
 import Suppliers from './pages/Suppliers'
 import InventoryDetails from './pages/InventoryDetails'
+import CodeBar128 from './pages/CodeBar128'
 
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/sales" element={<Sales/>} />
           <Route path="/suppliers" element={<Suppliers/>} />
           <Route path="/inventoryDetails" element={<InventoryDetails/>} />
+          <Route path="/codebar" element={<CodeBar128/>}/>
         </Routes>
       </Router>
     </>
