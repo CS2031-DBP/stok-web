@@ -7,11 +7,11 @@ const Suppliers = () => {
     <main className='grid grid-cols-2'>
 
       <div className="mx-16 mt-10 p-10 bg-gray-200 shadow-lg rounded-lg">
-        <SupplierPag></SupplierPag>
+        <CreateSupplier></CreateSupplier>
       </div>
 
       <div className="mx-16 mt-10 p-10 bg-gray-200 shadow-lg rounded-lg">
-        <CreateSupplier></CreateSupplier>
+        <SupplierPag></SupplierPag>
       </div>
 
     </main>
