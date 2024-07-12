@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 export const Codebarcomp = () => {
     const [ownerId, setOwnerId] = useState('');
     const [inventoryId, setInventoryId] = useState('');
-    const [amount, setAmount] = useState('');
     const [inventories, setInventories] = useState([]);
     const [search, setSearch] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
@@ -124,6 +123,14 @@ export const Codebarcomp = () => {
             )}
             <div className="flex justify-center mt-5">
                 <svg ref={barcodeRef}></svg>
+            </div>
+            <div className="flex justify-center">
+                <button
+                    className="mt-3 text-blue-500 hover:text-blue-600"
+                    onClick={() => { navigate('/dashboard') }}
+                >
+                    Back to Dashboard
+                </button>
             </div>
         </section>
     );
