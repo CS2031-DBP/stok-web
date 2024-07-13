@@ -1,6 +1,6 @@
 import React from 'react';
 import { Profile } from '../components/Profile';
-import {Link, useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { OwnerDashboard } from '../components/OwnerDashboard';
 import { EmployeeDashboard } from '../components/EmployeeDashboard';
@@ -59,7 +59,7 @@ const Dashboard = () => {
                   <div className='flex justify-center'>
                       <button
                           id='editProfile'
-                          className='bg-primary text-white font-bold py-2 px-20 mt-5 rounded-full cursor-pointer'
+                          className='bg-primary text-black font-bold py-2 px-20 mt-5 rounded-full cursor-pointer'
                           onClick={() => navigate('/codebar')}
                       >
                           BarCode128

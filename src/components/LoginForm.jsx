@@ -2,7 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchLogin } from '../services/api';
-import './Login.css';
+import '../styles/Login.css';
+import logo from '../images/stoklogo.png';
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -26,52 +27,49 @@ export const LoginForm = () => {
 
   return (
     <section className="signin-container">
-      <h1 className="text-white text-6xl font-bold mb-8">Ingresar</h1>
-      <form onSubmit={handleSubmit} className="signin-form">
-        <div className="block text-lg font-medium leading-6 text-gray-900">
-          <label htmlFor="email" className="block text-lg font-medium leading-6 text-gray-900">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            onChange={(e) => setUsername(e.target.value)}
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset bg-gray-200 ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-        <div className="block text-lg font-medium leading-6 text-gray-900">
-          <label htmlFor="password" className="block text-lg font-medium leading-6 text-gray-900">
-            Contraseña
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset bg-gray-200 ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-        {error && (
-          <div className="text-red-500 text-center mb-4">
-            {error}
+      <div className="box">
+        <h2 className="text-7xl">ST★K</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="inputBox">
+            <input
+              type="email"
+              name="email"
+              required
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
+              onKeyUp={(e) => e.target.setAttribute('value', e.target.value)}
+            />
+            <label>Username</label>
           </div>
-        )}
-        <div className="flex justify-center mb-4">
-          <button id="loginSubmit" className="continue" type="submit">
-            Iniciar Sesión
-          </button>
-        </div>
-        <div className="flex justify-center">
+          <div className="inputBox">
+            <input
+              type="password"
+              name="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyUp={(e) => e.target.setAttribute('value', e.target.value)}
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+            />
+            <label>Password</label>
+          </div>
+          {error && (
+            <div className="text-red-500 text-center mb-4">
+              {error}
+            </div>
+          )}
+          <input type="submit" name="sign-in" value="Sign In" />
+        </form>
+        <div className="flex justify-center mt-4">
           <button
-            className="mt-3 text-blue-500 hover:text-blue-600"
+            className="text-white"
             onClick={() => { navigate('/register') }}
           >
             Don't have an account? Register
           </button>
         </div>
-      </form>
+      </div>
     </section>
   );
 };
