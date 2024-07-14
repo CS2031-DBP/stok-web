@@ -1,117 +1,60 @@
-import React from 'react'
-import { fetchAssignEmployee, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api'
-import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { FaUsers, FaClipboardList, FaBoxes, FaChartLine, FaTruck, FaCashRegister, FaClipboard, FaUser } from 'react-icons/fa';
 
 export const OwnerDashboard = () => {
-    const [employeeId, setEmployeeId] = useState('');
-    const [ownerId, setOwnerId] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const fetchProfileInfo = async () => {
-          try {
-            const role = getRoleBasedOnToken();
-            let profileData;
-            profileData = await fetchGetOwner();
-            setOwnerId(profileData.id);
-          } catch (error) {
-            console.error('Error fetching profile information', error);
-          }
-        };
-    
-        fetchProfileInfo();
-      }, []);
-
-      const handleAssignEmployee = async () => {
-        try {
-          if (employeeId && ownerId) {
-            await fetchAssignEmployee(ownerId, employeeId);
-            alert('Employee assigned successfully!');
-          } else {
-            alert('Please enter a valid employee ID.');
-          }
-        } catch (error) {
-          console.error('Error assigning employee:', error);
-          alert('Failed to assign employee.');
-        }
-      };
-
-      const handleProducts = (e) => {
+    const handleNavigation = (path) => (e) => {
         e.preventDefault();
         try {
-          navigate('/products');
+            navigate(path);
         } catch (err) {
-          console.error('Error durante la navegación Product', err);
-        } 
-      };
-
-      const handleSuppliers = (e) => {
-        e.preventDefault();
-        try {
-          navigate('/suppliers');
-        } catch (err) {
-          console.error('Error durante la navegación a Suppliers', err);
+            console.error(`Error durante la navegación a ${path}`, err);
         }
+    };
 
-      };
-
-      const handleSales = (e) => {
-        e.preventDefault();
-        try {
-          navigate('/sales');
-        } catch (err) {
-          console.error('Error durante la navegación a Sales', err);
-        }
-
-      };
-    
-      return (
-        <div>
-          <h1 className='text-4xl font-bold m-5'>Owner Dashboard</h1>
-          <div className=' mb-5'>
-            <button 
-                onClick={handleProducts}
-                className='ml-2 p-3 px-10 bg-primary text-white rounded'
-            >
-                Products
-            </button>
-          </div>
-
-          <div className=' mb-5'>
-            <button 
-                onClick={handleSuppliers}
-                className='ml-2 p-3 px-10 bg-primary text-white rounded'
-            >
-                Suppliers
-            </button>
-          </div>
-
-          <div className=' mb-5'>
-            <button 
-                onClick={handleSales}
-                className='ml-2 p-3 px-10 bg-primary text-white rounded'
-            >
-                Sales
-            </button>
-          </div>
-          <h2 className='text-xl font-bold m-5'>Add Employee</h2>
-          <div className=' mb-5'>
-                <input
-                    type="text"
-                    placeholder="Enter Employee ID"
-                    value={employeeId}
-                    onChange={(e) => setEmployeeId(e.target.value)}
-                    className='border border-gray-300 p-2 rounded'
-                />
-                <button 
-                    onClick={handleAssignEmployee}
-                    className='ml-2 p-2 bg-primary text-white rounded-full'
+    return (
+        <div className="h-full bg-gray-800 text-white p-4">
+            <h1 className="text-2xl font-bold mb-5">DASHBOARD</h1>
+            <nav className="flex flex-col space-y-2">
+                <Button
+                    variant="link"
+                    onClick={handleNavigation('/dashboard')}
+                    className="text-left text-white w-full px-4 py-2 flex items-center hover:bg-gray-700"
                 >
-                    Assign Employee
-                </button>
-            </div>
-    
+                    <FaClipboardList className="mr-2" /> Dashboard
+                </Button>
+                <Button
+                    variant="link"
+                    onClick={handleNavigation('/products')}
+                    className="text-left text-white w-full px-4 py-2 flex items-center hover:bg-gray-700"
+                >
+                    <FaChartLine className="mr-2" /> Products
+                </Button>
+                <Button
+                    variant="link"
+                    onClick={handleNavigation('/sales')}
+                    className="text-left text-white w-full px-4 py-2 flex items-center hover:bg-gray-700"
+                >
+                    <FaCashRegister className="mr-2" /> Sales
+                </Button>
+                <Button
+                    variant="link"
+                    onClick={handleNavigation('/suppliers')}
+                    className="text-left text-white w-full px-4 py-2 flex items-center hover:bg-gray-700"
+                >
+                    <FaUser className="mr-2" /> Suppliers
+                </Button>
+                <Button
+                    variant="link"
+                    onClick={handleNavigation('/employees')}
+                    className="text-left text-white w-full px-4 py-2 flex items-center hover:bg-gray-700"
+                >
+                    <FaUsers className="mr-2" /> Employees
+                </Button>
+            </nav>
         </div>
-      );
-}
+    );
+};

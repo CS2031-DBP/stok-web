@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { fetchgetInventories, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
 import { InventoryItem } from './InventoryItem';
 
-const Inventories = () => {
+const Inventories = ({ page, setPage, size, setSize, refresh }) => {
     const [inventories, setInventories] = useState([]);
-    const [page, setPage] = useState(0);
-    const [size, setSize] = useState(2);
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
 
@@ -33,7 +31,7 @@ const Inventories = () => {
         };
 
         fetchInventories();
-    }, [page, size]);
+    }, [page, size, refresh]);
 
     const handlePageChange = (newPage) => {
         setPage(newPage);

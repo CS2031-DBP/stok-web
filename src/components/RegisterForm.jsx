@@ -100,14 +100,14 @@ const RegisterForm = () => {
             <button
               id="owner"
               className={`mr-5 py-2 px-4 font-medium rounded ${isOwner === true ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'}`}
-              onClick={() => setIsOwner(true)}
+              onClick={(e) => { e.preventDefault(); setIsOwner(true); }}
             >
               Sí
             </button>
             <button
               id="employee"
               className={`ml-5 py-2 px-4 font-medium rounded ${isOwner === false ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-900'}`}
-              onClick={() => setIsOwner(false)}
+              onClick={(e) => { e.preventDefault(); setIsOwner(false); }}
             >
               No
             </button>
@@ -137,7 +137,6 @@ const RegisterForm = () => {
           <button
             id="registerSubmit"
             className="continue-button-h"
-            type="submit"
           >
             Registrar
           </button>

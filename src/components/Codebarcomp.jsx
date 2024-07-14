@@ -46,8 +46,8 @@ export const Codebarcomp = () => {
                 JsBarcode(barcodeRef.current, inventoryId.toString(), {
                     format: "CODE128",
                     lineColor: "#000",
-                    width: 2,
-                    height: 40,
+                    width: 10,
+                    height: 200,
                     displayValue: true
                 });
             } else {

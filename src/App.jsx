@@ -10,6 +10,7 @@ import Sales from './pages/Sales'
 import Suppliers from './pages/Suppliers'
 import InventoryDetails from './pages/InventoryDetails'
 import CodeBar128 from './pages/CodeBar128'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const App = () => {

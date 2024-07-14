@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { fetchAddProduct, fetchCreateInventory, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
-export const CreateProduct = () => {
+
+export const CreateProduct = ({ onProductCreated }) => {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(0);
@@ -43,6 +44,7 @@ export const CreateProduct = () => {
           console.log(product);
           const inventoryResponse = await fetchCreateInventory(ownerId, product.id, quantity);
           console.log(inventoryResponse);
+          onProductCreated();
           navigate('/products')
         } catch (error) {
           console.log(error);

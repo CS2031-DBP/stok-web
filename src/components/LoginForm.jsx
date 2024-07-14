@@ -2,8 +2,8 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchLogin } from '../services/api';
+import { Form, Button, Alert, Container, Row, Col } from 'react-bootstrap';
 import '../styles/Login.css';
-import logo from '../images/stoklogo.png';
 
 export const LoginForm = () => {
   const [username, setUsername] = useState('');
@@ -26,50 +26,51 @@ export const LoginForm = () => {
   };
 
   return (
-    <section className="signin-container">
-      <div className="box">
-        <h2 className="text-7xl">ST★K</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="inputBox">
-            <input
-              type="email"
-              name="email"
-              required
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
-              onKeyUp={(e) => e.target.setAttribute('value', e.target.value)}
-            />
-            <label>Username</label>
-          </div>
-          <div className="inputBox">
-            <input
-              type="password"
-              name="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyUp={(e) => e.target.setAttribute('value', e.target.value)}
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-              title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-            />
-            <label>Password</label>
-          </div>
+    <Container className="signin-container flex items-center justify-center h-screen">
+      <Row className="box p-5 rounded shadow-lg bg-white">
+        <Col>
+          <h2 className="text-7xl text-center mb-5 text-[#2c3e50]">ST★K</h2>
           {error && (
-            <div className="text-red-500 text-center mb-4">
+            <Alert variant="danger" className="text-center">
               {error}
-            </div>
+            </Alert>
           )}
-          <input type="submit" name="sign-in" value="Sign In" />
-        </form>
-        <div className="flex justify-center mt-4">
-          <button
-            className="text-white"
-            onClick={() => { navigate('/register') }}
-          >
-            Don't have an account? Register
-          </button>
-        </div>
-      </div>
-    </section>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-4 inputBox">
+              <Form.Control
+                type="email"
+                placeholder="Username"
+                required
+                onChange={(e) => setUsername(e.target.value)}
+                value={username}
+                className="py-3 px-4 border-b-2 focus:outline-none focus:border-blue-500"
+              />
+            </Form.Group>
+            <Form.Group className="mb-4 inputBox">
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                className="py-3 px-4 border-b-2 focus:outline-none focus:border-blue-500"
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="w-full py-3">
+              Sign In
+            </Button>
+          </Form>
+          <div className="flex justify-center mt-4">
+            <Button
+              variant="link"
+              className="text-decoration-none text-primary"
+              onClick={() => navigate('/register')}
+            >
+              Don't have an account? Register
+            </Button>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
