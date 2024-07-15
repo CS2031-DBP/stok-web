@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import JsBarcode from 'jsbarcode';
-import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchgetAllInventories } from '../services/api';
+import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchgetAllProducts } from '../services/api'; // Asegúrate de que el path sea correcto
 import { useNavigate } from 'react-router-dom';
 
 export const Codebarcomp = () => {
     const [ownerId, setOwnerId] = useState('');
-    const [inventoryId, setInventoryId] = useState('');
-    const [inventories, setInventories] = useState([]);
+    const [productId, setProductId] = useState('');
+    const [products, setProducts] = useState([]);
     const [search, setSearch] = useState('');
     const [showDropdown, setShowDropdown] = useState(false);
     const [error, setError] = useState(null);
@@ -22,14 +22,13 @@ export const Codebarcomp = () => {
                 if (role === 'ROLE_OWNER') {
                     profileData = await fetchGetOwner();
                     setOwnerId(profileData.id);
-                    const inventoriesData = await fetchgetAllInventories(profileData.id);
-                    setInventories(inventoriesData);
                 } else if (role === 'ROLE_EMPLOYEE') {
                     profileData = await fetchGetEmployee();
                     setOwnerId(profileData.owner.id);
-                    const inventoriesData = await fetchgetAllInventories(profileData.owner.id);
-                    setInventories(inventoriesData);
                 }
+
+                const productsData = await fetchgetAllProducts();
+                setProducts(productsData);
             } catch (error) {
                 console.error('Error fetching profile information', error);
             }
@@ -42,8 +41,8 @@ export const Codebarcomp = () => {
         e.preventDefault();
 
         try {
-            if (inventoryId) {
-                JsBarcode(barcodeRef.current, inventoryId.toString(), {
+            if (productId) {
+                JsBarcode(barcodeRef.current, productId.toString(), {
                     format: "CODE128",
                     lineColor: "#000",
                     width: 2,
@@ -59,14 +58,14 @@ export const Codebarcomp = () => {
         }
     }
 
-    const handleSelect = (inventory) => {
-        setSearch(inventory.product.name);
-        setInventoryId(inventory.id);
+    const handleSelect = (product) => {
+        setSearch(product.name);
+        setProductId(product.id);
         setShowDropdown(false);
     }
 
-    const filteredInventories = inventories.filter(inventory =>
-        inventory.product.name && inventory.product.name.toLowerCase().includes(search.toLowerCase())
+    const filteredProducts = products.filter(product =>
+        product.name && product.name.toLowerCase().includes(search.toLowerCase())
     );
 
     return (
@@ -92,18 +91,18 @@ export const Codebarcomp = () => {
                             onBlur={() => setShowDropdown(false)}
                             className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset bg-gray-200 ring-black placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
-                        {showDropdown && filteredInventories.length > 0 && (
+                        {showDropdown && filteredProducts.length > 0 && (
                             <ul
                                 className="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border border-gray-300 max-h-60 overflow-auto"
                                 onMouseDown={(e) => e.preventDefault()}
                             >
-                                {filteredInventories.map(inventory => (
+                                {filteredProducts.map(product => (
                                     <li
-                                        key={inventory.id}
-                                        onClick={() => handleSelect(inventory)}
+                                        key={product.id}
+                                        onClick={() => handleSelect(product)}
                                         className="py-2 px-4 cursor-pointer hover:bg-gray-100"
                                     >
-                                        {inventory.product.name}
+                                        {product.name}
                                     </li>
                                 ))}
                             </ul>
