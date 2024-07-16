@@ -6,12 +6,13 @@ import { useNavigate } from 'react-router-dom';
 
 function NavBar() {
   const navigate = useNavigate();
-  const isLoggedIn = Boolean(localStorage.getItem('token'));
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+
+  const token = localStorage.getItem('token');
 
   return (
     <Navbar expand="lg" className="bg-[#2c3e50]">
@@ -20,15 +21,9 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {!isLoggedIn && (
-              <>
-                <Nav.Link href="/login" className="text-white">Login</Nav.Link>
-                <Nav.Link href="/register" className="text-white">Register</Nav.Link>
-              </>
-            )}
-            {isLoggedIn && (
-              <Nav.Link onClick={handleLogout} className="text-white cursor-pointer">Logout</Nav.Link>
-            )}
+            {!token && <Nav.Link href="/login" className="text-white">Login</Nav.Link>}
+            {!token && <Nav.Link href="/register" className="text-white">Register</Nav.Link>}
+            {token && <Nav.Link onClick={handleLogout} className="text-white cursor-pointer">Logout</Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Container>

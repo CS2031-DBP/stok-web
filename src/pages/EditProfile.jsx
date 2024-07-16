@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Profile } from '../components/Profile';
-import { fetchUpdateOwner, fetchUpdateEmployee } from '../services/api';
-import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchDeleteOwner, fetchDeleteEmployee, fetchDeleteOwnEmployee } from '../services/api';
+import { fetchUpdateOwner, fetchUpdateEmployee, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchDeleteOwner, fetchDeleteEmployee, fetchDeleteOwnEmployee } from '../services/api';
 import NavBar from '../components/NavBar';
 
 export const EditProfile = () => {
@@ -20,7 +19,7 @@ export const EditProfile = () => {
     useEffect(() => {
         const fetchProfileInfo = async () => {
             try {
-                const role = getRoleBasedOnToken();
+                const role = await getRoleBasedOnToken();
                 setUserRole(role);
                 let profileData;
 
@@ -46,11 +45,17 @@ export const EditProfile = () => {
                 });
             } catch (error) {
                 console.error('Error fetching profile information', error);
+                navigate('/login');
             }
         };
 
-        fetchProfileInfo();
-    }, []);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        } else {
+            fetchProfileInfo();
+        }
+    }, [navigate]);
 
     const handleDeleteAccount = async () => {
         try {

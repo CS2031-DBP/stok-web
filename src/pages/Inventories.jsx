@@ -7,6 +7,7 @@ import { EmployeeDashboard } from '../components/EmployeeDashboard';
 import { getRoleBasedOnToken } from '../services/api';
 import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 const Inventories = () => {
   const [page, setPage] = useState(0);
@@ -14,19 +15,26 @@ const Inventories = () => {
   const [refresh, setRefresh] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [role, setRole] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserRole = async () => {
-      try {
-        const userRole = await getRoleBasedOnToken();
-        setRole(userRole);
-      } catch (error) {
-        console.error('Error fetching user role', error);
-      }
+        try {
+            const userRole = await getRoleBasedOnToken();
+            setRole(userRole);
+        } catch (error) {
+            console.error('Error fetching user role', error);
+            navigate('/login');
+        }
     };
 
-    fetchUserRole();
-  }, []);
+    const token = localStorage.getItem('token');
+    if (!token) {
+        navigate('/login');
+    } else {
+        fetchUserRole();
+    }
+}, [navigate]);
 
   const handleRefresh = () => {
     setRefresh(!refresh);

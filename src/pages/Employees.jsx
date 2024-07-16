@@ -3,9 +3,10 @@ import EmployeesPag from '../components/EmployeesPag';
 import NavBar from '../components/NavBar';
 import { OwnerDashboard } from '../components/OwnerDashboard';
 import { getRoleBasedOnToken, fetchGetOwner } from '../services/api';
-import { Button, Modal } from 'react-bootstrap';
+import { Button, Modal, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AssignEmployee from '../components/AssignEmployee';
+import { useNavigate } from 'react-router-dom';
 
 const Employees = () => {
     const [page, setPage] = useState(0);
@@ -14,6 +15,8 @@ const Employees = () => {
     const [showModal, setShowModal] = useState(false);
     const [role, setRole] = useState('');
     const [ownerId, setOwnerId] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfileInfo = async () => {
@@ -24,14 +27,22 @@ const Employees = () => {
                 if (role === 'ROLE_OWNER') {
                     const ownerData = await fetchGetOwner();
                     setOwnerId(ownerData.id);
+                } else {
+                    setError('No tienes permisos para acceder a esta página.');
                 }
             } catch (error) {
                 console.error('Error fetching profile information:', error);
+                navigate('/login');
             }
         };
 
-        fetchProfileInfo();
-    }, []);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        } else {
+            fetchProfileInfo();
+        }
+    }, [navigate]);
 
     const handleRefresh = () => {
         setRefresh(!refresh);
@@ -43,21 +54,28 @@ const Employees = () => {
     return (
         <div className="h-screen flex flex-col">
             <NavBar />
-            <div className="flex flex-grow overflow-hidden">
-                <div className="w-1/6 bg-gray-800 text-white">
-                    <OwnerDashboard />
+            {error ? (
+                <div className="flex-grow flex items-center justify-center">
+                    <Alert variant="danger" className="text-center">
+                        {error}
+                    </Alert>
                 </div>
-                <div className="w-5/6 container mt-5">
-                    <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h1 className='text-4xl'>Gestión de Empleados</h1>
-                        <Button variant="primary" onClick={handleShowModal}>
-                            Asignar Empleado
-                        </Button>
+            ) : (
+                <div className="flex flex-grow overflow-hidden">
+                    <div className="w-1/6 bg-gray-800 text-white">
+                        <OwnerDashboard />
                     </div>
-                    <EmployeesPag ownerId={ownerId} page={page} setPage={setPage} size={size} setSize={setSize} refresh={refresh} handleRefresh={handleRefresh} />
+                    <div className="w-5/6 container mt-5">
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                            <h1 className='text-4xl'>Gestión de Empleados</h1>
+                            <Button variant="primary" onClick={handleShowModal}>
+                                Asignar Empleado
+                            </Button>
+                        </div>
+                        <EmployeesPag ownerId={ownerId} page={page} setPage={setPage} size={size} setSize={setSize} refresh={refresh} handleRefresh={handleRefresh} />
+                    </div>
                 </div>
-            </div>
-
+            )}
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Asignar Empleado</Modal.Title>
