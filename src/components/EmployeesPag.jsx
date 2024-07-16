@@ -1,35 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchgetSuppliers, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
+import { fetchgetEmployeesPag, getRoleBasedOnToken, fetchGetOwner, fetchDeleteEmployeeFromOwner } from '../services/api';
 import { Button, Table, Pagination } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Login.css';
 
-const SupplierPag = ({ page, setPage, size, setSize, refresh }) => {
-    const [suppliers, setSuppliers] = useState([]);
+const EmployeesPag = ({ page, setPage, size, setSize, refresh, handleRefresh }) => {
+    const [employees, setEmployees] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchSuppliers = async () => {
+        const fetchEmployees = async () => {
             try {
                 const role = getRoleBasedOnToken();
                 let profileData;
 
                 if (role === 'ROLE_OWNER') {
                     profileData = await fetchGetOwner();
-                    const data = await fetchgetSuppliers(profileData.id, page, size);
-                    setSuppliers(data.content);
+                    const data = await fetchgetEmployeesPag(profileData.id, page, size);
+                    setEmployees(data.content);
                     setTotalPages(data.totalPages);
-                } else if (role === 'ROLE_EMPLOYEE') {
+                } else {
                     alert("Sin permisos");
                 }
             } catch (error) {
-                console.error('Error al obtener los Suppliers:', error);
+                console.error('Error al obtener los empleados:', error);
             }
         };
 
-        fetchSuppliers();
+        fetchEmployees();
     }, [page, size, refresh]);
 
     const handlePageChange = (newPage) => {
@@ -39,6 +39,23 @@ const SupplierPag = ({ page, setPage, size, setSize, refresh }) => {
     const handleSizeChange = (event) => {
         setSize(Number(event.target.value));
         setPage(0);
+    };
+
+    const handleUnassignEmployee = async (employeeId) => {
+        try {
+            const role = getRoleBasedOnToken();
+            let profileData;
+
+            if (role === 'ROLE_OWNER') {
+                profileData = await fetchGetOwner();
+                await fetchDeleteEmployeeFromOwner(profileData.id, employeeId);
+                alert('Empleado desvinculado exitosamente');
+                setPage(0); // Reiniciar la página a la primera después de la desvinculación
+                handleRefresh();
+            }
+        } catch (error) {
+            console.error('Error al desvincular el empleado:', error);
+        }
     };
 
     return (
@@ -66,6 +83,7 @@ const SupplierPag = ({ page, setPage, size, setSize, refresh }) => {
                         value={size} 
                         onChange={handleSizeChange} 
                         min="1"
+                        max="10"
                         className="form-control w-auto"
                     />
                 </div>
@@ -77,27 +95,36 @@ const SupplierPag = ({ page, setPage, size, setSize, refresh }) => {
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Número de Teléfono</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {suppliers.length > 0 ? (
-                        suppliers.map((supplier, index) => (
+                    {employees.length > 0 ? (
+                        employees.map((employee, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{supplier.firstName + " " + supplier.lastName}</td>
-                                <td>{supplier.email}</td>
-                                <td>{supplier.phoneNumber}</td>
+                                <td>{employee.firstName} {employee.lastName}</td>
+                                <td>{employee.email}</td>
+                                <td>{employee.phoneNumber}</td>
+                                <td>
+                                    <Button 
+                                        variant="danger"
+                                        onClick={() => handleUnassignEmployee(employee.id)}
+                                    >
+                                        Desvincular
+                                    </Button>
+                                </td>
                             </tr>
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4" className="text-center text-danger">No se encontraron Suppliers.</td>
+                            <td colSpan="5" className="text-center text-danger">No se encontraron empleados.</td>
                         </tr>
                     )}
                 </tbody>
             </Table>
         </div>
-    );    
+    );
 };
 
-export default SupplierPag;
+export default EmployeesPag;

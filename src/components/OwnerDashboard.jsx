@@ -28,10 +28,10 @@ export const OwnerDashboard = () => {
                 </Button>
                 <Button
                     variant="link"
-                    onClick={handleNavigation('/products')}
+                    onClick={handleNavigation('/inventories')}
                     className="text-left text-white w-full px-4 py-2 flex items-center hover:bg-gray-700"
                 >
-                    <FaChartLine className="mr-2" /> Products
+                    <FaChartLine className="mr-2" /> Inventories
                 </Button>
                 <Button
                     variant="link"

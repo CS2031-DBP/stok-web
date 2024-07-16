@@ -31,7 +31,7 @@ export const Profile = () => {
 
     return (
         <article className="flex flex-col items-center justify-center">
-            <CgProfile className="text-8xl text-gray-600 my-5" />
+            <CgProfile className="text-8xl text-gray-600 mt-5" />
             <h1 className='text-4xl font-bold my-5'>
                 {profileInfo && (profileInfo.role === 'OWNER' ? 'Owner' : (profileInfo.role === 'EMPLOYEE' ? 'Employee' : 'Perfil'))}
             </h1>

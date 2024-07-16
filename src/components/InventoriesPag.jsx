@@ -1,41 +1,39 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { fetchgetSales, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
+import React, { useState, useEffect } from 'react';
+import { fetchgetInventories, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee } from '../services/api';
 import { Button, Table, Pagination, Modal } from 'react-bootstrap';
-import SaleInfo from './SaleInfo';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Login.css';
+import InventoryInfo from './InventoryInfo';
 
-const SalesPag = ({ page, setPage, size, setSize, refresh, handleRefresh }) => {
-    const [sales, setSales] = useState([]);
+const InventoriesPag = ({ page, setPage, size, setSize, refresh, handleRefresh }) => {
+    const [inventories, setInventories] = useState([]);
     const [totalPages, setTotalPages] = useState(1);
     const [showModal, setShowModal] = useState(false);
-    const [selectedSale, setSelectedSale] = useState(null);
-    const navigate = useNavigate();
+    const [selectedInventory, setSelectedInventory] = useState(null);
 
     useEffect(() => {
-        const fetchSales = async () => {
+        const fetchInventories = async () => {
             try {
                 const role = getRoleBasedOnToken();
                 let profileData;
 
                 if (role === 'ROLE_OWNER') {
                     profileData = await fetchGetOwner();
-                    const data = await fetchgetSales(profileData.id, page, size);
-                    setSales(data.content);
-                    setTotalPages(Math.min(data.totalPages, 10)); // Limit the total pages to 10
+                    const data = await fetchgetInventories(profileData.id, page, size);
+                    setInventories(data.content);
+                    setTotalPages(Math.min(data.totalPages, 10));
                 } else if (role === 'ROLE_EMPLOYEE') {
                     profileData = await fetchGetEmployee();
-                    const data = await fetchgetSales(profileData.owner.id, page, size);
-                    setSales(data.content);
-                    setTotalPages(Math.min(data.totalPages, 10)); // Limit the total pages to 10
+                    const data = await fetchgetInventories(profileData.owner.id, page, size);
+                    setInventories(data.content);
+                    setTotalPages(Math.min(data.totalPages, 10));
                 }
             } catch (error) {
-                console.error('Error al obtener las ventas:', error);
+                console.error('Error al obtener los inventarios:', error);
             }
         };
 
-        fetchSales();
+        fetchInventories();
     }, [page, size, refresh]);
 
     const handlePageChange = (newPage) => {
@@ -47,14 +45,14 @@ const SalesPag = ({ page, setPage, size, setSize, refresh, handleRefresh }) => {
         setPage(0);
     };
 
-    const handleViewDetails = (saleId) => {
-        setSelectedSale(saleId);
+    const handleViewDetails = (inventory) => {
+        setSelectedInventory(inventory);
         setShowModal(true);
     };
 
     const handleCloseModal = () => {
         setShowModal(false);
-        setSelectedSale(null);
+        setSelectedInventory(null);
     };
 
     return (
@@ -90,26 +88,28 @@ const SalesPag = ({ page, setPage, size, setSize, refresh, handleRefresh }) => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Cantidad Vendida</th>
-                        <th>Fecha</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Categoría</th>
+                        <th>Stock</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {sales.length > 0 ? (
-                        sales.map((sale, index) => (
+                    {inventories.length > 0 ? (
+                        inventories.map((inventory, index) => (
                             <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{sale.inventoryforSaleDto.product.name}</td>
-                                <td>{sale.amount}</td>
-                                <td>S/.{sale.saleCant}</td>
-                                <td>{new Date(sale.createdAt).toLocaleDateString()}</td>
+                                <td>{inventory.product.name}</td>
+                                <td>{inventory.product.description}</td>
+                                <td>{inventory.product.price}</td>
+                                <td>{inventory.product.category}</td>
+                                <td>{inventory.stock}</td>
                                 <td>
                                     <Button 
                                         variant="primary"
-                                        onClick={() => handleViewDetails(sale.id)}
+                                        onClick={() => handleViewDetails(inventory)}
                                     >
                                         Ver Detalles
                                     </Button>
@@ -118,21 +118,27 @@ const SalesPag = ({ page, setPage, size, setSize, refresh, handleRefresh }) => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="6" className="text-center text-danger">No se encontraron ventas.</td>
+                            <td colSpan="7" className="text-center text-danger">No se encontraron Productos.</td>
                         </tr>
                     )}
                 </tbody>
             </Table>
-            <Modal show={showModal} onHide={handleCloseModal}>
+
+            <Modal show={showModal} onHide={handleCloseModal} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Detalles de la Venta</Modal.Title>
+                    <Modal.Title>Información del Inventario</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {selectedSale && <SaleInfo saleId={selectedSale} handleRefresh={handleRefresh} />}
+                    {selectedInventory && <InventoryInfo inventory={selectedInventory} handleRefresh={handleRefresh} />}
                 </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseModal}>
+                        Cerrar
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </div>
     );    
 };
 
-export default SalesPag;
+export default InventoriesPag;

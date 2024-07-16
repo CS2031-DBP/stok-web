@@ -5,10 +5,11 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import { EditProfile } from './pages/EditProfile'
-import Products from './pages/Products'
+import Inventories from './pages/Inventories'
 import Sales from './pages/Sales'
 import Suppliers from './pages/Suppliers'
 import InventoryDetails from './pages/InventoryDetails'
+import Employees from './pages/Employees'
 import CodeBar128 from './pages/CodeBar128'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -24,10 +25,11 @@ const App = () => {
           <Route path="/register" element={<Register/>}/>
           <Route path='/dashboard' element={<Dashboard/>} />
           <Route path="/profile/edit" element={<EditProfile/>} />
-          <Route path="/products" element={<Products/>} />
+          <Route path="/inventories" element={<Inventories/>} />
           <Route path="/sales" element={<Sales/>} />
           <Route path="/suppliers" element={<Suppliers/>} />
           <Route path="/inventoryDetails" element={<InventoryDetails/>} />
+          <Route path="/employees" element={<Employees/>}/>
           <Route path="/codebar" element={<CodeBar128/>}/>
         </Routes>
       </Router>

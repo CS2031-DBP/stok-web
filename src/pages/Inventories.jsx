@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { CreateSale } from '../components/CreateSale';
-import SalesPag from '../components/SalesPag';
+import { CreateInventory } from '../components/CreateInventory';
+import InventoriesPag from '../components/InventoriesPag';
 import NavBar from '../components/NavBar';
 import { OwnerDashboard } from '../components/OwnerDashboard';
 import { EmployeeDashboard } from '../components/EmployeeDashboard';
-import { Button, Modal } from 'react-bootstrap';
 import { getRoleBasedOnToken } from '../services/api';
+import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const Sales = () => {
+const Inventories = () => {
   const [page, setPage] = useState(0);
   const [size, setSize] = useState(10);
   const [refresh, setRefresh] = useState(false);
@@ -45,24 +45,22 @@ const Sales = () => {
         <div className="w-5/6 overflow-auto">
           <div className="container mt-5">
             <div className="d-flex justify-content-between align-items-center mb-3">
-              <h1 className='text-4xl'>Gestión de Ventas</h1>
-              {role === 'ROLE_OWNER' && (
-                <Button variant="primary" onClick={handleShowModal}>
-                  Agregar Venta
-                </Button>
-              )}
+              <h1 className='text-4xl'>Gestión de Inventarios</h1>
+              <Button variant="primary" onClick={handleShowModal}>
+                Agregar Inventario
+              </Button>
             </div>
-            <SalesPag page={page} setPage={setPage} size={size} setSize={setSize} refresh={refresh} handleRefresh={handleRefresh} />
+            <InventoriesPag page={page} setPage={setPage} size={size} setSize={setSize} refresh={refresh} handleRefresh={handleRefresh} />
           </div>
         </div>
       </div>
 
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Crear Venta</Modal.Title>
+          <Modal.Title>Crear Inventario</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CreateSale onSaleCreated={() => {
+          <CreateInventory onInventoryCreated={() => {
             handleRefresh();
             handleCloseModal();
           }} />
@@ -72,4 +70,4 @@ const Sales = () => {
   );
 }
 
-export default Sales;
+export default Inventories;

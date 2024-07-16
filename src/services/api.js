@@ -134,6 +134,33 @@ export const fetchAssignEmployee = async (ownerId, employeeId) => {
     }
 };
 
+export const fetchgetEmployeesPag = async (ownerId, page, size) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${BACKEND_URL}/owner/viewAllEmployeesPag/${ownerId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+            params: { page, size }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchgetEmployeesPag:', error);
+        throw error;
+    }
+};
+
+export const fetchDeleteEmployeeFromOwner = async (ownerId, employeeId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post(`${BACKEND_URL}/employees/delete/${ownerId}/${employeeId}`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchDeleteEmployeeFromOwner:', error);
+        throw error;
+    }
+};
+
 // Product
 
 export const fetchAddProduct = async (name, description, price, category) => {
@@ -331,6 +358,45 @@ export const fetchgetSales = async (ownerId, page, size) => {
     } catch (error) {
       console.error('Error en fetchgetSales:', error);
       throw error;
+    }
+};
+
+export const fetchUpdateSale = async (updateSaleRequest) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.patch(`${BACKEND_URL}/sales/update`, updateSaleRequest, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchUpdateSale:', error);
+        throw error;
+    }
+};
+
+export const fetchDeleteSale = async (ownerId, saleId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.delete(`${BACKEND_URL}/sales/delete/${ownerId}/${saleId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchDeleteSale:', error);
+        throw error;
+    }
+};
+
+export const fetchGetSale = async (ownerId, saleId) => {
+    try {
+        const token = localStorage.getItem('token');
+        const response = await axios.get(`${BACKEND_URL}/sales/${ownerId}/${saleId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error en fetchGetSale:', error);
+        throw error;
     }
 };
 

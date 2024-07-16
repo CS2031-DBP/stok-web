@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { fetchGetInventory, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchReduceInventory, fetchIncreaseInventory, fetchDeleteInventory } from '../services/api';
 
-const InventoryInfo = () => {
-  const [inventoryInfo, setInventoryInfo] = useState(null);
+const InventoryInfo = ({ inventory, handleRefresh }) => {
+  const [inventoryInfo, setInventoryInfo] = useState(inventory);
   const [ownerId, setOwnerId] = useState('');
-  const [inventoryId, setInventoryId] = useState(null);
-  const [quantity, setQuantity] = useState(0); // New state for quantity
+  const [quantity, setQuantity] = useState(0);
 
   const navigate = useNavigate();
 
@@ -15,14 +14,6 @@ const InventoryInfo = () => {
       try {
         const role = getRoleBasedOnToken();
         let profileData;
-        const storedInventoryId = localStorage.getItem('inventoryId');
-
-        if (!storedInventoryId) {
-          console.error('No se encontró el ID del inventario en el localStorage');
-          return;
-        }
-
-        setInventoryId(storedInventoryId);
 
         if (role === 'ROLE_OWNER') {
           profileData = await fetchGetOwner();
@@ -39,26 +30,12 @@ const InventoryInfo = () => {
     fetchProfileData();
   }, []);
 
-  useEffect(() => {
-    const fetchInventoryInfo = async () => {
-      try {
-        if (ownerId && inventoryId) {
-          const inventoryData = await fetchGetInventory(ownerId, inventoryId);
-          setInventoryInfo(inventoryData);
-        }
-      } catch (error) {
-        console.error('Error al obtener la información del inventario:', error);
-      }
-    };
-
-    fetchInventoryInfo();
-  }, [ownerId, inventoryId]);
-
   const handleReduceStock = async () => {
     try {
-      await fetchReduceInventory(ownerId, inventoryId, quantity);
-      const updatedInventoryData = await fetchGetInventory(ownerId, inventoryId);
+      await fetchReduceInventory(ownerId, inventory.id, quantity);
+      const updatedInventoryData = await fetchGetInventory(ownerId, inventory.id);
       setInventoryInfo(updatedInventoryData);
+      handleRefresh();
     } catch (error) {
       console.error('Error al reducir el stock:', error);
     }
@@ -66,9 +43,10 @@ const InventoryInfo = () => {
 
   const handleIncreaseStock = async () => {
     try {
-      await fetchIncreaseInventory(ownerId, inventoryId, quantity);
-      const updatedInventoryData = await fetchGetInventory(ownerId, inventoryId);
+      await fetchIncreaseInventory(ownerId, inventory.id, quantity);
+      const updatedInventoryData = await fetchGetInventory(ownerId, inventory.id);
       setInventoryInfo(updatedInventoryData);
+      handleRefresh();
     } catch (error) {
       console.error('Error al aumentar el stock:', error);
     }
@@ -76,16 +54,12 @@ const InventoryInfo = () => {
 
   const handleDeleteInventory = async () => {
     try {
-      await fetchDeleteInventory(inventoryId, ownerId);
+      await fetchDeleteInventory(inventory.id, ownerId);
       alert('Inventario eliminado exitosamente');
-      navigate('/products');
+      handleRefresh();
     } catch (error) {
       console.error('Error al eliminar el inventario:', error);
     }
-  };
-
-  const handleBackToInventories = () => {
-    navigate('/products');
   };
 
   if (!inventoryInfo) {
@@ -93,30 +67,25 @@ const InventoryInfo = () => {
   }
 
   return (
-    <section className="mx-16 mt-10 p-14 bg-gray-200 shadow-lg rounded-lg">
-      <h1 className="text-center text-4xl font-bold leading-7 text-gray-900 m-9 my-12">
-        Información del Inventario
-      </h1>
-        <div className="inventory-info bg-white p-6 rounded-lg shadow-md mx-auto max-w-md">
-          <h2 className="text-3xl font-semibold text-center mb-6">{inventoryInfo.product.name}</h2>
-            <div className="text-base mb-4">
-              <p><strong>ID del Producto:</strong> {inventoryInfo.product.id}</p>
-              <p><strong>Descripción:</strong> {inventoryInfo.product.description}</p>
-              <p><strong>Precio:</strong> ${inventoryInfo.product.price}</p>
-              <p><strong>Categoría:</strong> {inventoryInfo.product.category}</p>
-              <p><strong>Stock:</strong> {inventoryInfo.stock}</p>
-            </div>
-            <div className="flex justify-center mt-6">
-              <button
-                onClick={handleBackToInventories}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full"
-              >
-                Volver a Inventarios
-              </button>
-            </div>
+    <div className="inventory-info p-4">
+      <h2 className="text-2xl font-semibold text-center mb-4">{inventoryInfo.product.name}</h2>
+      <div className="text-base mb-4">
+        <p><strong>ID del Producto:</strong> {inventoryInfo.product.id}</p>
+        <p><strong>Descripción:</strong> {inventoryInfo.product.description}</p>
+        <p><strong>Precio:</strong> ${inventoryInfo.product.price}</p>
+        <p><strong>Categoría:</strong> {inventoryInfo.product.category}</p>
+        <p><strong>Stock:</strong> {inventoryInfo.stock}</p>
+      </div>
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={handleDeleteInventory}
+          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full mr-2"
+        >
+          Eliminar Inventario
+        </button>
       </div>
 
-      <h2 className="text-center text-3xl font-bold leading-7 text-gray-900 m-9 my-12">
+      <h2 className="text-center text-2xl font-bold leading-7 text-gray-900 mt-6 mb-4">
         Aumentar o Reducir Stock
       </h2>
       <div className="flex items-center mb-4">
@@ -135,29 +104,19 @@ const InventoryInfo = () => {
         <button
           type="button"
           onClick={handleReduceStock}
-          className="bg-primary hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
         >
           Reducir Stock
         </button>
         <button
           type="button"
           onClick={handleIncreaseStock}
-          className="bg-primary hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
           Aumentar Stock
         </button>
       </div>
-
-      <div className="flex items-center justify-center mb-4">
-        <button
-          type="button"
-          onClick={handleDeleteInventory}
-          className="bg-primary hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Eliminar Inventario
-        </button>
-      </div>
-    </section>
+    </div>
   );
 };
 

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchCreateSale, fetchgetAllInventories } from '../services/api';
+import { fetchCreateInventory, getRoleBasedOnToken, fetchGetOwner, fetchGetEmployee, fetchgetAllProducts } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Alert, Dropdown, DropdownButton } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Login.css';
 
-export const CreateSale = ({ onSaleCreated }) => {
-    const [inventories, setInventories] = useState([]);
-    const [filteredInventories, setFilteredInventories] = useState([]);
+export const CreateInventory = ({ onInventoryCreated }) => {
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedProduct, setSelectedProduct] = useState('');
-    const [amount, setAmount] = useState('');
+    const [quantity, setQuantity] = useState(0);
     const [error, setError] = useState(null);
     const [ownerId, setOwnerId] = useState('');
     const navigate = useNavigate();
@@ -23,31 +23,36 @@ export const CreateSale = ({ onSaleCreated }) => {
 
                 if (role === 'ROLE_OWNER') {
                     profileData = await fetchGetOwner();
-                    setOwnerId(profileData.id)
-                    const inventoriesData = await fetchgetAllInventories(profileData.id);
-                    setInventories(inventoriesData);
-                    setFilteredInventories(inventoriesData); // Inicialmente, mostrar todos los productos
+                    setOwnerId(profileData.id);
                 } else if (role === 'ROLE_EMPLOYEE') {
                     profileData = await fetchGetEmployee();
-                    setOwnerId(profileData.owner.id)
-                    const inventoriesData = await fetchgetAllInventories(profileData.owner.id);
-                    setInventories(inventoriesData);
-                    setFilteredInventories(inventoriesData); // Inicialmente, mostrar todos los productos
+                    setOwnerId(profileData.owner.id);
                 }
             } catch (error) {
                 console.error('Error fetching profile information', error);
             }
         };
 
+        const fetchProducts = async () => {
+            try {
+                const productsData = await fetchgetAllProducts();
+                setProducts(productsData);
+                setFilteredProducts(productsData); // Inicialmente, mostrar todos los productos
+            } catch (error) {
+                console.error('Error fetching products', error);
+            }
+        };
+
         fetchProfileInfo();
+        fetchProducts();
     }, []);
 
     useEffect(() => {
-        const results = inventories.filter(inventory =>
-            inventory.product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        const results = products.filter(product =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
         );
-        setFilteredInventories(results);
-    }, [searchTerm, inventories]);
+        setFilteredProducts(results);
+    }, [searchTerm, products]);
 
     const handleSelectProduct = (productName) => {
         setSelectedProduct(productName);
@@ -58,24 +63,24 @@ export const CreateSale = ({ onSaleCreated }) => {
         e.preventDefault();
 
         try {
-            const product = inventories.find(inv => inv.product.name === selectedProduct);
+            const product = products.find(prod => prod.name === selectedProduct);
             if (!product) {
                 setError('Producto no encontrado');
                 return;
             }
-            const response = await fetchCreateSale(ownerId, product.id, amount);
-            console.log(response);
-            onSaleCreated();
-            navigate('/sales');
+            const inventoryResponse = await fetchCreateInventory(ownerId, product.id, quantity);
+            console.log(inventoryResponse);
+            onInventoryCreated();
+            navigate('/inventories');
         } catch (error) {
             console.log(error);
-            setError('Error durante la creación de la venta');
+            setError('Error durante la creación del inventario');
         }
     }
 
     return (
         <section className="p-4">
-            <h1 className="text-center text-3xl font-bold mb-4">Crear Venta</h1>
+            <h1 className="text-center text-3xl font-bold mb-4">Crear Inventario</h1>
             {error && (
                 <Alert variant="danger" className="text-center">
                     {error}
@@ -93,9 +98,9 @@ export const CreateSale = ({ onSaleCreated }) => {
                             className="py-2 px-3 mb-3 border focus:outline-none focus:ring focus:border-blue-500"
                         />
                         <Dropdown.Menu>
-                            {filteredInventories.map((inventory) => (
-                                <Dropdown.Item key={inventory.id} eventKey={inventory.product.name}>
-                                    {inventory.product.name}
+                            {filteredProducts.map((product) => (
+                                <Dropdown.Item key={product.id} eventKey={product.name}>
+                                    {product.name}
                                 </Dropdown.Item>
                             ))}
                         </Dropdown.Menu>
@@ -105,8 +110,8 @@ export const CreateSale = ({ onSaleCreated }) => {
                     <Form.Label className="text-lg font-medium">Cantidad</Form.Label>
                     <Form.Control
                         type="number"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
+                        value={quantity}
+                        onChange={(e) => setQuantity(e.target.value)}
                         min="1"
                         className="py-2 px-3 border focus:outline-none focus:ring focus:border-blue-500"
                         required
@@ -114,7 +119,7 @@ export const CreateSale = ({ onSaleCreated }) => {
                 </Form.Group>
                 <div className="flex justify-center">
                     <Button type="submit" className="bg-primary text-white font-bold py-2 px-4 rounded">
-                        Crear Venta
+                        Crear Inventario
                     </Button>
                 </div>
             </Form>
